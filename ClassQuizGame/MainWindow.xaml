@@ -1,0 +1,291 @@
+﻿<Window x:Class="ClassQuizGame.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ClassQuizGame"
+        mc:Ignorable="d"
+        Loaded="Window_Loaded"
+        Title="Quiz Game" 
+        Height="450" 
+        Width="800"
+        Focusable="True"
+        KeyDown="Window_KeyDown"
+        KeyUp="Window_KeyUp"
+        SizeChanged="Window_SizeChanged">
+    <Grid x:Name="BackgroundGrid" Focusable="True" MouseDown="Grid_MouseDown">
+        <Grid.Background>
+            <LinearGradientBrush x:Name="BackgroundBrush" EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="LightBlue" Offset="0"/>
+                <GradientStop x:Name="BackgroundStop" Color="White" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Grid.Triggers>
+            <EventTrigger RoutedEvent="Window.Loaded">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <PointAnimation
+                            Storyboard.TargetName="BackgroundBrush"
+                            Storyboard.TargetProperty="EndPoint"
+                            From="0.0,1.0" To="1.0,1.0" Duration="0:0:5"
+                            AutoReverse="True"
+                            RepeatBehavior="Forever"
+                        />
+                        <DoubleAnimation
+                            Storyboard.TargetName="BackgroundStop"
+                            Storyboard.TargetProperty="Offset"
+                            From="1.0" To="2.0" Duration="0:0:7"
+                            AutoReverse="True"
+                            RepeatBehavior="Forever"
+                        />
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Grid.Triggers>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <DockPanel Panel.ZIndex="4" Grid.Row="0" Grid.Column="0">
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="_File">
+                    <MenuItem Header="_Open Quiz..." InputGestureText="Ctrl+O" Click="Open_Quiz_Clicked"/>
+                    <MenuItem x:Name="CloseQuizMenuItem" Header="_Close Quiz" InputGestureText="Ctrl+C" Click="Close_Quiz_Clicked" IsEnabled="False"/>
+                    <MenuItem x:Name="JumpToFinalQuestionMenuItem" Header="_Jump to Final Question" InputGestureText="Ctrl+J" Click="Jump_Clicked" IsEnabled="False"/>
+                    <MenuItem Header="_Quit" InputGestureText="Ctrl+Q" Click="Quit_Clicked"/>
+                </MenuItem>
+                <MenuItem Header="_Players">
+                    <MenuItem Header="_Add">
+                        <MenuItem x:Name="AddPlayerKMenuItem" Header="Player _Keyboard" Click="Add_Player_Keyboard_Clicked"/>
+                        <MenuItem x:Name="AddPlayer1MenuItem" Header="Player _1" Click="Add_Player_1_Clicked"/>
+                        <MenuItem x:Name="AddPlayer2MenuItem" Header="Player _2" Click="Add_Player_2_Clicked"/>
+                        <MenuItem x:Name="AddPlayer3MenuItem" Header="Player _3" Click="Add_Player_3_Clicked"/>
+                        <MenuItem x:Name="AddPlayer4MenuItem" Header="Player _4" Click="Add_Player_4_Clicked"/>
+                    </MenuItem>
+                    <MenuItem Header="_Remove">
+                        <MenuItem x:Name="RemovePlayerKMenuItem" Header="Player _Keyboard" Click="Remove_Player_Keyboard_Clicked"/>
+                        <MenuItem x:Name="RemovePlayer1MenuItem" Header="Player _1" Click="Remove_Player_1_Clicked"/>
+                        <MenuItem x:Name="RemovePlayer2MenuItem" Header="Player _2" Click="Remove_Player_2_Clicked"/>
+                        <MenuItem x:Name="RemovePlayer3MenuItem" Header="Player _3" Click="Remove_Player_3_Clicked"/>
+                        <MenuItem x:Name="RemovePlayer4MenuItem" Header="Player _4" Click="Remove_Player_4_Clicked"/>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="_Options">
+                    <MenuItem x:Name="FullScreenMenuItem" Header="_Full screen" IsChecked="True" IsCheckable="True" Checked="Full_Screen_Checked" Unchecked="Full_Screen_Unchecked"/>
+                    <Separator/>
+                    <MenuItem x:Name="CorrectAnswerPointsMenuItem" Header="_Correct answer points..." Click="Correct_Answer_Points_Clicked"/>
+                    <MenuItem x:Name="WrongAnswersDeductMenuItem" Header="_Wrong answers reward/deduct points" IsCheckable="True" Checked="Wrong_Answers_Deduct_Checked" Unchecked="Wrong_Answers_Deduct_Unchecked"/>
+                    <MenuItem x:Name="WrongAnswerPointsMenuItem" Header="W_rong answer points..." Click="Wrong_Answer_Points_Clicked" IsEnabled="False"/>
+                    <MenuItem x:Name="AlwaysShowPointsMenuItem" Header="_Always show points"  IsCheckable="True" Checked="Always_Show_Points_Checked" Unchecked="Always_Show_Points_Unchecked"/>
+                    <MenuItem x:Name="AlwaysShowPenaltiesMenuItem" Header="A_lways show penalties"  IsCheckable="True" Checked="Always_Show_Penalties_Checked" Unchecked="Always_Show_Penalties_Unchecked"/>
+                    <Separator/>
+                    <MenuItem x:Name="WaitForAllPlayersMenuItem" Header="Wait for _all players to answer" IsCheckable="True" Checked="Wait_For_All_Players_Checked" Unchecked="Wait_For_All_Players_Unchecked"/>
+                    <MenuItem x:Name="ShowAnswersMenuItem" Header="_Grade answers immediately" IsCheckable="True" Checked="Grade_Answers_Immediately_Checked" Unchecked="Grade_Answers_Immediately_Unchecked"/>
+                    <Separator/>
+                    <MenuItem x:Name="QuestionsTimedMenuItem" Header="_Questions are timed" IsCheckable="True" Checked="Questions_Timed_Checked" Unchecked="Questions_Timed_Unchecked"/>
+                    <MenuItem Header="_Set question timer..." IsEnabled="True" Click="Set_Question_Timer_Clicked"/>
+                    <Separator/>
+                    <MenuItem x:Name="RumbleMenuItem" Header="_Enable rumble" IsCheckable="True" Checked="Rumble_Checked" Unchecked="Rumble_Unchecked"/>
+                    <Separator/>
+                    <MenuItem x:Name="RequireProctorMenuItem" Header="Require _proctor to ready" IsCheckable="True" Checked="Require_Proctor_Checked" Unchecked="Require_Proctor_Unchecked"/>
+                    <MenuItem x:Name="RequirePlayersMenuItem" Header="Require players _to ready" IsCheckable="True" Checked="Require_Players_Checked" Unchecked="Require_Players_Unchecked"/>
+                </MenuItem>
+                <MenuItem Header="_Help">
+                    <MenuItem Header="_Controls" Click="Controls_Clicked"/>
+                    <MenuItem Header="_About" Click="About_Clicked"/>
+                </MenuItem>
+            </Menu>
+        </DockPanel>
+        <Popup x:Name="JumpToFinalQuestionPopup" Panel.ZIndex="6" Grid.Row="1" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" PlacementTarget="{Binding ElementName=QuizBorder}" Placement="Center">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FFE1E1E1">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="JumpToFinalQuestionTextBlock" Text="Jump to final question?" Margin="4" Grid.Row="0" Grid.ColumnSpan="2" TextAlignment="Center"/>
+                    <Button x:Name="JumpToFinalQuestionOkButton" Content="_Ok" Padding="4" Margin="4" Grid.Row="2" Grid.Column="0" Click="Jump_Popup_Ok_Clicked"/>
+                    <Button x:Name="JumpToFinalQuestionCancelButton" Content="_Cancel" Padding="4" Margin="4" Grid.Row="2" Grid.Column="1" Click="Jump_Popup_Cancel_Clicked"/>
+                </Grid>
+            </StackPanel>
+        </Popup>
+        <Popup x:Name="CloseQuizPopup" Panel.ZIndex="6" Grid.Row="1" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" PlacementTarget="{Binding ElementName=QuizBorder}" Placement="Center">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FFE1E1E1">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="CloseQuizTextBlock" Text="Close Quiz?" Margin="4" Grid.Row="0" Grid.ColumnSpan="2" TextAlignment="Center"/>
+                    <Button x:Name="CloseQuizOkButton" Content="_Ok" Padding="4" Margin="4" Grid.Row="2" Grid.Column="0" Click="Close_Quiz_Popup_Ok_Clicked"/>
+                    <Button x:Name="CloseQuizCancelButton" Content="_Cancel" Padding="4" Margin="4" Grid.Row="2" Grid.Column="1" Click="Close_Quiz_Popup_Cancel_Clicked"/>
+                </Grid>
+            </StackPanel>
+        </Popup>
+        <Popup x:Name="QuitPopup" Panel.ZIndex="6" Grid.Row="1" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" PlacementTarget="{Binding ElementName=QuizBorder}" Placement="Center">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FFE1E1E1">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="QuitTextBlock" Text="Quit the program?" Margin="4" Grid.Row="0" Grid.ColumnSpan="2" TextAlignment="Center"/>
+                    <Button x:Name="QuitOkButton" Content="_Ok" Padding="4" Margin="4" Grid.Row="2" Grid.Column="0" Click="Quit_Popup_Ok_Clicked"/>
+                    <Button x:Name="QuitCancelButton" Content="_Cancel" Padding="4" Margin="4" Grid.Row="2" Grid.Column="1" Click="Quit_Popup_Cancel_Clicked"/>
+                </Grid>
+            </StackPanel>
+        </Popup>
+        <Popup x:Name="CorrectAnswerPointsPopup" Panel.ZIndex="6" Grid.Row="1" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" PlacementTarget="{Binding ElementName=QuizBorder}" Placement="Center">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FFE1E1E1">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="CorrectAnswerPointsTextBlock" Text="Set Correct Answer Points:" Margin="4" Grid.Row="0" Grid.ColumnSpan="2" TextAlignment="Center"/>
+                    <local:NumericTextBox x:Name="CorrectPointsTextBox" Margin="4" Grid.Row="1" Grid.ColumnSpan="2"/>
+                    <Button x:Name="CorrectPointsOkButton" Content="_Ok" Padding="4" Margin="4" Grid.Row="2" Grid.Column="0" Click="Correct_Answer_Popup_Ok_Clicked"/>
+                    <Button x:Name="CorrectPointsCancelButton" Content="_Cancel" Padding="4" Margin="4" Grid.Row="2" Grid.Column="1" Click="Correct_Answer_Popup_Cancel_Clicked"/>
+                </Grid>
+            </StackPanel>
+        </Popup>
+        <Popup x:Name="WrongAnswerPointsPopup" Panel.ZIndex="6" Grid.Row="1" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" PlacementTarget="{Binding ElementName=QuizBorder}" Placement="Center">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FFE1E1E1">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="WrongPointsTextBlock" Text="Set Correct Wrong Points:" Margin="4" Grid.Row="0" Grid.ColumnSpan="2" TextAlignment="Center"/>
+                    <local:NumericTextBox x:Name="WrongPointsTextBox" Margin="4" Grid.Row="1" Grid.ColumnSpan="2"/>
+                    <Button x:Name="WrongPointsOkButton" Content="_Ok" Padding="4" Margin="4" Grid.Row="2" Grid.Column="0" Click="Wrong_Answer_Popup_Ok_Clicked"/>
+                    <Button x:Name="WrongPointsCancelButton" Content="_Cancel" Padding="4" Margin="4" Grid.Row="2" Grid.Column="1" Click="Wrong_Answer_Popup_Cancel_Clicked"/>
+                </Grid>
+            </StackPanel>
+        </Popup>
+        <Popup x:Name="QuestionTimerPopup" Panel.ZIndex="6" Grid.Row="1" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" PlacementTarget="{Binding ElementName=QuizBorder}" Placement="Center">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FFE1E1E1">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="QuestionTimerTextBlock" Text="Set Question Timer (Seconds):" Margin="4" Grid.Row="0" Grid.ColumnSpan="2" TextAlignment="Center"/>
+                    <local:NumericTextBox x:Name="QuestionTimerTextBox" Margin="4" Grid.Row="1" Grid.ColumnSpan="2"/>
+                    <Button x:Name="QuestionTimerOkButton" Content="_Ok" Padding="4" Margin="4" Grid.Row="2" Grid.Column="0" Click="Set_Question_Timer_Ok_Clicked"/>
+                    <Button x:Name="QuestionTimerCancelButton" Content="_Cancel" Padding="4" Margin="4" Grid.Row="2" Grid.Column="1" Click="Set_Question_Timer_Cancel_Clicked"/>
+                </Grid>
+            </StackPanel>
+        </Popup>
+        <Popup x:Name="ControlsPopup" Panel.ZIndex="6" Grid.Row="1" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" PlacementTarget="{Binding ElementName=QuizBorder}" Placement="Center">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FFE1E1E1">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="ControlsTextBlock" Text="Controls" Margin="4" Grid.Row="0" Grid.ColumnSpan="2" TextAlignment="Center"/>
+                    <TextBlock x:Name="ControlsExplainTextBlock" TextAlignment="Center" Margin="4" Grid.Row="1" Grid.ColumnSpan="2">
+                        Load a quiz to begin. <LineBreak/>
+                        <LineBreak/>
+                        Press the space bar to advance through screens. <LineBreak/> 
+                        Press shift+[button] to force player answers. <LineBreak/>
+                        <LineBreak/>
+                        Copy the format of the included <LineBreak/> quizzes/example.txt to make a new quiz.
+                    </TextBlock>
+                    <Button x:Name="ControlsOkButton" Content="_Ok" Padding="4" Margin="4" Grid.Row="2" Grid.Column="0" Click="Controls_Ok_Clicked"/>
+                </Grid>
+            </StackPanel>
+        </Popup>
+        <Popup x:Name="AboutPopup" Panel.ZIndex="6" Grid.Row="1" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" PlacementTarget="{Binding ElementName=QuizBorder}" Placement="Center">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FFE1E1E1">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="AboutTextBlock" Text="Made by: Corbin" Margin="4" Grid.Row="0" Grid.ColumnSpan="2" TextAlignment="Center"/>
+                    <Button x:Name="AboutOkButton" Content="_Ok" Padding="4" Margin="4" Grid.Row="2" Grid.Column="0" Click="About_Ok_Clicked"/>
+                </Grid>
+            </StackPanel>
+        </Popup>
+        <Popup x:Name="FailedToLoadQuizPopup" Panel.ZIndex="6" Grid.Row="1" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" PlacementTarget="{Binding ElementName=QuizBorder}" Placement="Center">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FFE1E1E1">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="FailedTextBlock" Text="Failed to Load Quiz" FontSize="16" TextAlignment="Center" Margin="4" Grid.Row="0" Grid.ColumnSpan="2"/>
+                    <TextBlock x:Name="FailedReasonTextBlock" Margin="4" Grid.Row="1" Grid.ColumnSpan="2" TextAlignment="Center"/>
+                    <Button x:Name="FailedOkButton" Content="_Ok" Padding="4" Margin="4" Grid.Row="2" Grid.Column="0" Click="Failed_Ok_Clicked"/>
+                </Grid>
+            </StackPanel>
+        </Popup>
+        <Rectangle Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Opacity="0.35">
+            <Rectangle.Fill>
+                <ImageBrush ImageSource="assets/Texture.png"/>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Canvas x:Name="ParticleCanvas" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Panel.ZIndex="2">
+        </Canvas>
+        <Border x:Name="QuizBorder" Grid.Row="1" Grid.Column="0" Focusable="True" Panel.ZIndex="3">
+            <local:Quiz x:Name="QuizControl"
+                Focusable="True"
+                KeyDown="Window_KeyDown"
+                KeyUp="Window_KeyUp"/>
+        </Border>
+        <StackPanel x:Name="PlayerGrid" Orientation="Horizontal" Panel.ZIndex="10" Grid.Row="2" Grid.Column="0" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+            <local:PlayerControl x:Name="TeamKPlayerControl" Panel.ZIndex="1" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+            <local:PlayerControl x:Name="Team1PlayerControl" Panel.ZIndex="1" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+            <local:PlayerControl x:Name="Team2PlayerControl" Panel.ZIndex="1" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+            <local:PlayerControl x:Name="Team3PlayerControl" Panel.ZIndex="1" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+            <local:PlayerControl x:Name="Team4PlayerControl" Panel.ZIndex="1" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+        </StackPanel>
+    </Grid>
+</Window>

@@ -1,0 +1,15 @@
+<Quiz>
+<Title>Test</Title>
+<Question choices="2" answer="L">
+Does this work?
+<L>Yes</L>
+<R>No</R>
+</Question>
+<Question choices="4" answer="X">
+Does this still work?
+<A>Yes</A>
+<B>No</B>
+<X>Maybe</X>
+<Y>Nyes</Y>
+</Question>
+</Quiz>

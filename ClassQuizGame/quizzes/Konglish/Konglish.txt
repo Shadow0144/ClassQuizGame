@@ -1,0 +1,178 @@
+<Quiz folder="quizzes/Konglish">
+	<Title>Konglish</Title>
+	<Question choices="2" answer="L">
+		Which of these is a hotdog?
+		<L image="hotdog.jpg"></L>
+		<R image="corndog.jpg"></R>
+	</Question>
+	<Question choices="4" answer="X" image="corndog.jpg">
+		This is a __________.
+		<A>Hotdog</A>
+		<B>Breaddog</B>
+		<X>Corndog</X>
+		<Y>Dogdog</Y>
+	</Question>
+	<Question choices="4" answer="A">
+		When do you say "Cheer up!"?
+		<A>When someone is sad</A>
+		<B>At a sports game</B>
+		<X>Before a test</X>
+		<Y>When someone is happy</Y>
+	</Question>
+	<Question choices="4" answer="Y" image="mechanical_pencil.jpg">
+		What is this?
+		<A>Sharp</A>
+		<B>Pen</B>
+		<X>Ballpoint Pen</X>
+		<Y>Pencil</Y>
+	</Question>
+	<Question choices="4" answer="B">
+		Which is NOT a meaning of "service"?
+		<A>봉사</A>
+		<B>무료</B>
+		<X>복무</X>
+		<Y>수리</Y>
+	</Question>
+	<Question choices="2" answer="R">
+		Which of these is a Chicago hotdog?
+		<L image="korean_hotdog.jpg"></L>
+		<R image="chicago_hotdog.jpg"></R>
+	</Question>
+	<Question choices="4" answer="X">
+		Which is the right word for "싸인"?
+		<A>Sign</A>
+		<B>Sing</B>
+		<X>Signature</X>
+		<Y>Write</Y>
+	</Question>
+	<Question choices="4" answer="A">
+		Which is the right word for "핸드폰"?
+		<A>Cell phone</A>
+		<B>Hand phone</B>
+		<X>Foot phone</X>
+		<Y>Sell phone</Y>
+	</Question>
+	<Question choices="4" answer="Y">
+	<Question choices="2" answer="L">
+		What do you say when you see your friend?
+		<L>"Nice to see you!"</L>
+		<R>"Nice to meet you!"</R>
+	</Question>
+		Which is the right word for "콘센트"?
+		<A>Convent</A>
+		<B>Consent</B>
+		<X>Inlet</X>
+		<Y>Outlet</Y>
+	</Question>
+	<Question choices="4" answer="Y">
+		Which of these is NOT called a "notebook"?
+		<A image="notebook_composition.jpg"></A>
+		<B image="notebook_computer.jpg"></B>
+		<X image="notebook_spiral.jpg"></X>
+		<Y image="notebook_textbook.jpg"></Y>
+	</Question>
+	<Question choices="4" answer="A">
+		What's the right word for "펑크"?
+		<A>Puncture</A>
+		<B>Point</B>
+		<X>Punk</X>
+		<Y>Stab</Y>
+	</Question>
+	<Question choices="2" answer="R">
+		Which of these is a mailing address?
+		<L>example@gmail.com</L>
+		<R>555 Example St</R>
+	</Question>
+	<Question choices="4" answer="A" image="marker.jpg">
+		What's this called?
+		<A>Marker</A>
+		<B>Pen</B>
+		<X>Sign Pen</X>
+		<Y>Crayon</Y>
+	</Question>
+	<Question choices="4" answer="Y">
+		What's "커닝" in English?
+		<A>Stealing</A>
+		<B>Cunning</B>
+		<X>Learning</X>
+		<Y>Cheating</Y>
+	</Question>
+	<Question choices="4" answer="X">
+		"아르바이트" is originally from what language?
+		<A>French</A>
+		<B>English</B>
+		<X>German</X>
+		<Y>Arabic</Y>
+	</Question>
+	<Question choices="2" answer="R">
+		Can you eat a menu?
+		<L>Yes</L>
+		<R>No</R>
+	</Question>
+	<Question choices="4" answer="B">
+		Which of these is NOT a menu?
+		<A image="menu_paper.jpg"></A>
+		<B image="menu_food.jpg"></B>
+		<X image="menu_computer.png"></X>
+		<Y image="menu_screen.jpg"></Y>
+	</Question>
+	<Question choices="2" answer="L" image="AC.jpg">
+		What is this?
+		<L>A/C</L>
+		<R>Air-con</R>
+	</Question>
+	<Question choices="2" answer="L">
+		What do you say when you see your friend?
+		<L>"Nice to see you!"</L>
+		<R>"Nice to meet you!"</R>
+	</Question>
+	<Question choices="4" answer="X" image="notebook.jpeg">
+		What's this?
+		<A>Note</A>
+		<B>Notu</B>
+		<X>Notebook</X>
+		<Y>Writebook</Y>
+	</Question>
+	<Question choices="4" answer="A" image="treadmill.jpg">
+		What's this?
+		<A>Treadmill</A>
+		<B>Runmill</B>
+		<X>Running Machine</X>
+		<Y>Walking Machine</Y>
+	</Question>
+	<Question choices="4" answer="Y">
+		What is "스킨 트러블" in English?
+		<A>Skin Trouble</A>
+		<B>Skin Problem</B>
+		<X>Ache</X>
+		<Y>Acne</Y>
+	</Question>
+	<Question choices="4" answer="A" image="gummy.webp">
+		What is this called?
+		<A>Gummy</A>
+		<B>Chocolate</B>
+		<X>Jelly</X>
+		<Y>Bonbon</Y>
+	</Question>
+	<Question choices="4" answer="Y">
+		What is "다큐" in English?
+		<A>Doc</A>
+		<B>Dogu</B>
+		<X>Docu</X>
+		<Y>Documentary</Y>
+	</Question>
+	<Question choices="4" answer="B" image="convertible.jpg">
+		What is this called?
+		<A>No-Roof Car</A>
+		<B>Convertible</B>
+		<X>Open Car</X>
+		<Y>Motorcycle</Y>
+	</Question>
+	<Question choices="4" answer="X" points="500" penalty="-500" must_answer="true" timer="3">
+		How do you spell my name?
+		<A>Callbin</A>
+		<B>Corvin</B>
+		<X>Corbin</X>
+		<Y>Colbin</Y>
+	</Question>
+</Quiz>

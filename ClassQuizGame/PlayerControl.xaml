@@ -1,0 +1,162 @@
+﻿<UserControl x:Class="ClassQuizGame.PlayerControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ClassQuizGame"
+             x:Name="Control"
+             mc:Ignorable="d"
+             d:DesignWidth="200"
+             d:DesignHeight="136"
+             VerticalAlignment="Bottom">
+    <UserControl.RenderTransform>
+        <TransformGroup>
+            <TranslateTransform x:Name="PlayerTranslate" Y="180"/>
+        </TransformGroup>
+    </UserControl.RenderTransform>
+    <UserControl.Triggers>
+        <EventTrigger RoutedEvent="Border.Loaded">
+            <BeginStoryboard>
+                <Storyboard x:Name="AnimateInStoryboard">
+                    <DoubleAnimation
+                            x:Name="InControlWidth"
+                            Storyboard.TargetName="Control"
+                            Storyboard.TargetProperty="Width"
+                            From="0.0"
+                            Duration="0:0:0.25"
+                        />
+                    <DoubleAnimation
+                            Storyboard.TargetName="PlayerTranslate"
+                            Storyboard.TargetProperty="Y"
+                            From="180.0" To="180.0" Duration="0:0:0.25"
+                        />
+                    <DoubleAnimation
+                            Storyboard.TargetName="PlayerTranslate"
+                            Storyboard.TargetProperty="Y"
+                            BeginTime="0:0:0.25"
+                            From="180.0" To="0.0" Duration="0:0:0.25"
+                        />
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Border.Loaded">
+            <BeginStoryboard>
+                <Storyboard x:Name="AnimatePointsStoryboard">
+                    <DoubleAnimation x:Name="AnimatePointsTranslation"
+                            Storyboard.TargetName="ScorePlusTranslate"
+                            Storyboard.TargetProperty="Y"
+                            From="0.0" To="50.0" Duration="0:0:0.25"
+                        />
+                    <DoubleAnimation
+                            Storyboard.TargetName="ScorePlusTextBlock"
+                            Storyboard.TargetProperty="Opacity"
+                            From="0.0" To="1.0" Duration="0:0:0.25"
+                        />
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Border.Unloaded">
+            <BeginStoryboard>
+                <Storyboard x:Name="AnimateOutStoryboard">
+                    <DoubleAnimation
+                            Storyboard.TargetName="PlayerTranslate"
+                            Storyboard.TargetProperty="Y"
+                            From="0.0" To="180.0" Duration="0:0:0.25"
+                        />
+                    <DoubleAnimation
+                            x:Name="OutControlWidth"
+                            Storyboard.TargetName="Control"
+                            Storyboard.TargetProperty="Width"
+                            To="0.0"
+                            BeginTime="0:0:0.25"
+                            Duration="0:0:0.25"
+                        />
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Border.Unloaded">
+            <BeginStoryboard>
+                <Storyboard x:Name="ConnectedStoryboard">
+                    <DoubleAnimation
+                            Storyboard.TargetName="DisconnectOverlay"
+                            Storyboard.TargetProperty="Opacity"
+                            From="0.75" To="0.0" Duration="0:0:0.15"
+                        />
+                    <DoubleAnimation
+                            Storyboard.TargetName="DisconnectImage"
+                            Storyboard.TargetProperty="Opacity"
+                            From="1.0" To="0.0" Duration="0:0:0.15"
+                        />
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Border.Unloaded">
+            <BeginStoryboard>
+                <Storyboard x:Name="DisconnectedStoryboard">
+                    <DoubleAnimation
+                            Storyboard.TargetName="DisconnectOverlay"
+                            Storyboard.TargetProperty="Opacity"
+                            From="0.0" To="0.75" Duration="0:0:0.15"
+                        />
+                    <DoubleAnimation
+                            Storyboard.TargetName="DisconnectImage"
+                            Storyboard.TargetProperty="Opacity"
+                            From="0.0" To="1.0" Duration="0:0:0.15"
+                        />
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </UserControl.Triggers>
+    <Grid x:Name="PlayerGrid" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="200" Height="136">
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Image Source="assets/ScoreHolder.png" Stretch="Fill"/>
+        <Rectangle x:Name="InternalBackground" Panel.ZIndex="0">
+            <Rectangle.Fill>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop x:Name="PlayerBrushStopStart" Color="White" Offset="0"/>
+                    <GradientStop x:Name="PlayerBrushStopStop" Color="Black" Offset="3"/>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+            <Rectangle.OpacityMask>
+                <ImageBrush ImageSource="assets/NameBackground.png"/>
+            </Rectangle.OpacityMask>
+        </Rectangle>
+        <Image x:Name="ReadyImage" Source="assets/PlayerReady.png" Visibility="Hidden" Stretch="Fill"/>
+        <Rectangle x:Name="DisconnectOverlay" IsHitTestVisible="False" Panel.ZIndex="2" Opacity="0.0">
+            <Rectangle.Fill>
+                <SolidColorBrush Color="Gray"/>
+            </Rectangle.Fill>
+            <Rectangle.OpacityMask>
+                <ImageBrush ImageSource="assets/ScoreMask.png"/>
+            </Rectangle.OpacityMask>
+        </Rectangle>
+        <Image x:Name="DisconnectImage" IsHitTestVisible="False" Panel.ZIndex="3" Height="64" HorizontalAlignment="Center" VerticalAlignment="Center" Source="assets/Disconnected.png" Opacity="0.0" RenderTransformOrigin="0.5,0.5"/>
+        <Image x:Name="AnsweredImage" IsHitTestVisible="False" Panel.ZIndex="1" Height="32" HorizontalAlignment="Right"></Image>
+        <local:OutlinedTextBlock x:Name="ScorePlusTextBlock" Panel.ZIndex="1" VerticalAlignment="Center" HorizontalAlignment="Right" MinWidth="80" MaxWidth="115" FontSize="18" FontWeight="Bold" Margin="6" TextAlignment="Right">
+            <local:OutlinedTextBlock.RenderTransform>
+                <TranslateTransform x:Name="ScorePlusTranslate" Y="-52" X="6"/>
+            </local:OutlinedTextBlock.RenderTransform>
+        </local:OutlinedTextBlock>
+
+        <Image x:Name="VictoryImage" Height="32" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5">
+            <Image.RenderTransform>
+                <TranslateTransform Y="-70"/>
+            </Image.RenderTransform>
+        </Image>
+        <local:NumericTextBox x:Name="ScoreTextBox" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Width="140" RenderTransformOrigin="0.5,0.5" FontSize="42" Background="Transparent" BorderBrush="Transparent" Foreground="White" FontWeight="Bold">
+            <local:NumericTextBox.RenderTransform>
+                <TranslateTransform Y="-32"/>
+            </local:NumericTextBox.RenderTransform> 0
+        </local:NumericTextBox>
+        <TextBox x:Name="NameTextBox" Text="Team Name" VerticalAlignment="Center" HorizontalAlignment="Center" Width="160" TextAlignment="Center" RenderTransformOrigin="0.5,0.5" FontSize="24" Background="Transparent" BorderBrush="Transparent" Foreground="White" FontWeight="Bold">
+            <TextBox.RenderTransform>
+                <TranslateTransform Y="34"/>
+            </TextBox.RenderTransform>
+        </TextBox>
+    </Grid>
+</UserControl>

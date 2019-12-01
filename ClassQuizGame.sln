@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29201.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassQuizGame", "ClassQuizGame\ClassQuizGame.csproj", "{0EA59008-187E-4905-9C3D-B6265EF2130B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0EA59008-187E-4905-9C3D-B6265EF2130B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EA59008-187E-4905-9C3D-B6265EF2130B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EA59008-187E-4905-9C3D-B6265EF2130B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EA59008-187E-4905-9C3D-B6265EF2130B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3B08024B-4783-4806-BA9F-D63937C4B494}
+	EndGlobalSection
+EndGlobal
