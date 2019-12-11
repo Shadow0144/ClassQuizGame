@@ -62,12 +62,12 @@ namespace ClassQuizGame.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool showAnswers {
+        public bool gradeAnswersImmediately {
             get {
-                return ((bool)(this["showAnswers"]));
+                return ((bool)(this["gradeAnswersImmediately"]));
             }
             set {
-                this["showAnswers"] = value;
+                this["gradeAnswersImmediately"] = value;
             }
         }
         
@@ -188,6 +188,54 @@ namespace ClassQuizGame.Properties {
             }
             set {
                 this["fullScreen"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool shuffleQuestions {
+            get {
+                return ((bool)(this["shuffleQuestions"]));
+            }
+            set {
+                this["shuffleQuestions"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool shuffleAnswers {
+            get {
+                return ((bool)(this["shuffleAnswers"]));
+            }
+            set {
+                this["shuffleAnswers"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool showAnswers {
+            get {
+                return ((bool)(this["showAnswers"]));
+            }
+            set {
+                this["showAnswers"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool mute {
+            get {
+                return ((bool)(this["mute"]));
+            }
+            set {
+                this["mute"] = value;
             }
         }
     }

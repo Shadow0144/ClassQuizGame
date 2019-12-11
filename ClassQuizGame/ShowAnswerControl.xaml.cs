@@ -99,43 +99,86 @@ namespace ClassQuizGame
                 else { }
             }
 
+            if (Settings.ShowAnswers)
+            {
+                AnswerABox.showAnswers();
+                AnswerBBox.showAnswers();
+                AnswerXBox.showAnswers();
+                AnswerYBox.showAnswers();
+                AnswerLBox.showAnswers();
+                AnswerRBox.showAnswers();
+            }
+            else { }
+
             int topScore = int.MinValue;
             for (int index = 0; index < 5; index++)
             {
                 PlayerControl playerControl = MainWindow.getInstance().GetPlayerControl(index);
-                if (playerControl.lastAnswer == PlayerControl.AnswerType.correct)
+                if (playerControl.inGame)
                 {
-                    if (question.usingCustomPoints)
+                    if (playerControl.getLastAnswerResult() == PlayerControl.AnswerResult.correct)
                     {
-                        playerControl.addScore(question.customPoints, true);
-                    }
-                    else
-                    {
-                        playerControl.addScore(Settings.RightPoints, true);
-                    }
-                }
-                else if (playerControl.lastAnswer == PlayerControl.AnswerType.wrong)
-                {
-                    if (question.usingCustomPenalty)
-                    {
-                        playerControl.addScore(question.customPenalty, false);
-                    }
-                    else
-                    {
-                        if (Settings.WrongDeduct)
+                        if (question.usingCustomPoints)
                         {
-                            playerControl.addScore(Settings.WrongPoints, false);
+                            playerControl.addScore(question.customPoints, true);
                         }
-                        else { }
+                        else
+                        {
+                            playerControl.addScore(Settings.RightPoints, true);
+                        }
                     }
+                    else if (playerControl.getLastAnswerResult() == PlayerControl.AnswerResult.wrong)
+                    {
+                        if (question.usingCustomPenalty)
+                        {
+                            playerControl.addScore(question.customPenalty, false);
+                        }
+                        else
+                        {
+                            if (Settings.WrongDeduct)
+                            {
+                                playerControl.addScore(Settings.WrongPoints, false);
+                            }
+                            else { }
+                        }
+                    }
+                    else { }
+                    playerControl.revealAnswer();
+                    if (Settings.ShowAnswers)
+                    {
+                        switch (playerControl.lastAnswer)
+                        {
+                            case AnswerBox.Answer.None:
+                                break;
+                            case AnswerBox.Answer.A:
+                                AnswerABox.setAnswered(index);
+                                break;
+                            case AnswerBox.Answer.B:
+                                AnswerBBox.setAnswered(index);
+                                break;
+                            case AnswerBox.Answer.X:
+                                AnswerXBox.setAnswered(index);
+                                break;
+                            case AnswerBox.Answer.Y:
+                                AnswerYBox.setAnswered(index);
+                                break;
+                            case AnswerBox.Answer.L:
+                                AnswerLBox.setAnswered(index);
+                                break;
+                            case AnswerBox.Answer.R:
+                                AnswerRBox.setAnswered(index);
+                                break;
+                        }
+                    }
+                    else { }
+                    if (playerControl.score > topScore)
+                    {
+                        topScore = playerControl.score;
+                    }
+                    else { }
+                    playerControl.AnimatePointsStoryboard.Begin();
                 }
-                else {  }
-                playerControl.revealAnswer();
-                if (playerControl.score > topScore)
-                {
-                    topScore = playerControl.score;
-                }
-                playerControl.AnimatePointsStoryboard.Begin();
+                else { }
             }
             for (int index = 0; index < 5; index++)
             {
@@ -207,150 +250,70 @@ namespace ClassQuizGame
             answerCount = question.answers.Length;
             if (answerCount == 2)
             {
-                AnswerAPanel.Visibility = Visibility.Collapsed;
-                AnswerBPanel.Visibility = Visibility.Collapsed;
-                AnswerXPanel.Visibility = Visibility.Collapsed;
-                AnswerYPanel.Visibility = Visibility.Collapsed;
-                AnswerLTextBox.Text = question.answers[0];
-                AnswerLImage.Source = question.answerImages[0];
-                AnswerRTextBox.Text = question.answers[1];
-                AnswerRImage.Source = question.answerImages[1];
+                AnswerABox.Visibility = System.Windows.Visibility.Collapsed;
+                AnswerBBox.Visibility = System.Windows.Visibility.Collapsed;
+                AnswerXBox.Visibility = System.Windows.Visibility.Collapsed;
+                AnswerYBox.Visibility = System.Windows.Visibility.Collapsed;
+                AnswerLBox.setAnswer(AnswerBox.Answer.L);
+                AnswerRBox.setAnswer(AnswerBox.Answer.R);
+                AnswerLBox.setAnswerContent(question.answers[0], question.answerImages[0]);
+                AnswerRBox.setAnswerContent(question.answers[1], question.answerImages[1]);
 
                 switch (question.correctAnswer)
                 {
                     case 0:
-                        AnswerLRectangle.Fill = correctBrush;
-                        AnswerLRectangle.Stroke = correctStroke;
-                        AnswerRRectangle.Fill = incorrectBrush;
-                        AnswerRRectangle.Stroke = incorrectStroke;
+                        AnswerLBox.setCorrect();
+                        AnswerRBox.setWrong();
                         break;
                     case 1:
-                        AnswerLRectangle.Fill = incorrectBrush;
-                        AnswerLRectangle.Stroke = incorrectStroke;
-                        AnswerRRectangle.Fill = correctBrush;
-                        AnswerRRectangle.Stroke = correctStroke;
+                        AnswerLBox.setWrong();
+                        AnswerRBox.setCorrect();
                         break;
                 }
 
-                if (question.answers[0].Length == 0)
-                {
-                    AnswerLTextBox.Visibility = System.Windows.Visibility.Collapsed;
-                }
-                else { }
-                if (question.answerImages[0] == null)
-                {
-                    AnswerLImage.Visibility = System.Windows.Visibility.Collapsed;
-                }
-                else { }
-                if (question.answers[1].Length == 0)
-                {
-                    AnswerRTextBox.Visibility = System.Windows.Visibility.Collapsed;
-                }
-                else { }
-                if (question.answerImages[1] == null)
-                {
-                    AnswerRImage.Visibility = System.Windows.Visibility.Collapsed;
-                }
-                else { }
                 ButtonsImage.Source = twoButtons;
             }
             else if (answerCount == 4)
             {
-                AnswerATextBox.Text = question.answers[0];
-                AnswerAImage.Source = question.answerImages[0];
-                AnswerBTextBox.Text = question.answers[1];
-                AnswerBImage.Source = question.answerImages[1];
-                AnswerXTextBox.Text = question.answers[2];
-                AnswerXImage.Source = question.answerImages[2];
-                AnswerYTextBox.Text = question.answers[3];
-                AnswerYImage.Source = question.answerImages[3];
-                AnswerLPanel.Visibility = Visibility.Collapsed;
-                AnswerRPanel.Visibility = Visibility.Collapsed;
+                AnswerABox.setAnswer(AnswerBox.Answer.A);
+                AnswerBBox.setAnswer(AnswerBox.Answer.B);
+                AnswerXBox.setAnswer(AnswerBox.Answer.X);
+                AnswerYBox.setAnswer(AnswerBox.Answer.Y);
+                AnswerABox.setAnswerContent(question.answers[0], question.answerImages[0]);
+                AnswerBBox.setAnswerContent(question.answers[1], question.answerImages[1]);
+                AnswerXBox.setAnswerContent(question.answers[2], question.answerImages[2]);
+                AnswerYBox.setAnswerContent(question.answers[3], question.answerImages[3]);
+                AnswerLBox.Visibility = System.Windows.Visibility.Collapsed;
+                AnswerRBox.Visibility = System.Windows.Visibility.Collapsed;
 
                 switch (question.correctAnswer)
                 {
                     case 0:
-                        AnswerARectangle.Fill = correctBrush;
-                        AnswerARectangle.Stroke = correctStroke;
-                        AnswerBRectangle.Fill = incorrectBrush;
-                        AnswerBRectangle.Stroke = incorrectStroke;
-                        AnswerXRectangle.Fill = incorrectBrush;
-                        AnswerXRectangle.Stroke = incorrectStroke;
-                        AnswerYRectangle.Fill = incorrectBrush;
-                        AnswerYRectangle.Stroke = incorrectStroke;
+                        AnswerABox.setCorrect();
+                        AnswerBBox.setWrong();
+                        AnswerXBox.setWrong();
+                        AnswerYBox.setWrong();
                         break;
                     case 1:
-                        AnswerARectangle.Fill = incorrectBrush;
-                        AnswerARectangle.Stroke = incorrectStroke;
-                        AnswerBRectangle.Fill = correctBrush;
-                        AnswerBRectangle.Stroke = correctStroke;
-                        AnswerXRectangle.Fill = incorrectBrush;
-                        AnswerXRectangle.Stroke = incorrectStroke;
-                        AnswerYRectangle.Fill = incorrectBrush;
-                        AnswerYRectangle.Stroke = incorrectStroke;
+                        AnswerABox.setWrong();
+                        AnswerBBox.setCorrect();
+                        AnswerXBox.setWrong();
+                        AnswerYBox.setWrong();
                         break;
                     case 2:
-                        AnswerARectangle.Fill = incorrectBrush;
-                        AnswerARectangle.Stroke = incorrectStroke;
-                        AnswerBRectangle.Fill = incorrectBrush;
-                        AnswerBRectangle.Stroke = incorrectStroke;
-                        AnswerXRectangle.Fill = correctBrush;
-                        AnswerXRectangle.Stroke = correctStroke;
-                        AnswerYRectangle.Fill = incorrectBrush;
-                        AnswerYRectangle.Stroke = incorrectStroke;
+                        AnswerABox.setWrong();
+                        AnswerBBox.setWrong();
+                        AnswerXBox.setCorrect();
+                        AnswerYBox.setWrong();
                         break;
                     case 3:
-                        AnswerARectangle.Fill = incorrectBrush;
-                        AnswerARectangle.Stroke = incorrectStroke;
-                        AnswerBRectangle.Fill = incorrectBrush;
-                        AnswerBRectangle.Stroke = incorrectStroke;
-                        AnswerXRectangle.Fill = incorrectBrush;
-                        AnswerXRectangle.Stroke = incorrectStroke;
-                        AnswerYRectangle.Fill = correctBrush;
-                        AnswerYRectangle.Stroke = correctStroke;
+                        AnswerABox.setWrong();
+                        AnswerBBox.setWrong();
+                        AnswerXBox.setWrong();
+                        AnswerYBox.setCorrect();
                         break;
                 }
 
-                if (question.answers[0].Length == 0)
-                {
-                    AnswerATextBox.Visibility = System.Windows.Visibility.Collapsed;
-                }
-                else { }
-                if (question.answerImages[0] == null)
-                {
-                    AnswerAImage.Visibility = System.Windows.Visibility.Collapsed;
-                }
-                else { }
-                if (question.answers[1].Length == 0)
-                {
-                    AnswerBTextBox.Visibility = System.Windows.Visibility.Collapsed;
-                }
-                else { }
-                if (question.answerImages[1] == null)
-                {
-                    AnswerBImage.Visibility = System.Windows.Visibility.Collapsed;
-                }
-                else { }
-                if (question.answers[2].Length == 0)
-                {
-                    AnswerXTextBox.Visibility = System.Windows.Visibility.Collapsed;
-                }
-                else { }
-                if (question.answerImages[2] == null)
-                {
-                    AnswerXImage.Visibility = System.Windows.Visibility.Collapsed;
-                }
-                else { }
-                if (question.answers[3].Length == 0)
-                {
-                    AnswerYTextBox.Visibility = System.Windows.Visibility.Collapsed;
-                }
-                else { }
-                if (question.answerImages[3] == null)
-                {
-                    AnswerYImage.Visibility = System.Windows.Visibility.Collapsed;
-                }
-                else { }
                 ButtonsImage.Source = fourButtons;
             }
             else { }
@@ -373,52 +336,16 @@ namespace ClassQuizGame
             }
             else { }
             QuestionTextBlock.FontSize = 32 * yScale;
-            int answerFontSize = 24;
-            AnswerATextBox.FontSize = answerFontSize * yScale;
-            AnswerBTextBox.FontSize = answerFontSize * yScale;
-            AnswerXTextBox.FontSize = answerFontSize * yScale;
-            AnswerYTextBox.FontSize = answerFontSize * yScale;
-            AnswerLTextBox.FontSize = answerFontSize * yScale;
-            AnswerRTextBox.FontSize = answerFontSize * yScale;
+
+            AnswerABox.setScale(xScale, yScale);
+            AnswerBBox.setScale(xScale, yScale);
+            AnswerXBox.setScale(xScale, yScale);
+            AnswerYBox.setScale(xScale, yScale);
+            AnswerLBox.setScale(xScale, yScale);
+            AnswerRBox.setScale(xScale, yScale);
+
             ButtonsImage.Height = 128 * yScale;
-            int imageWidth = 120;
-            int imageHeight = 120;
-            if (AnswerLImage.Source != null) // L
-            {
-                AnswerLImage.Width = imageWidth * xScale;
-                AnswerLImage.Height = imageHeight * yScale;
-            }
-            else { }
-            if (AnswerRImage.Source != null) // R
-            {
-                AnswerRImage.Width = imageWidth * xScale;
-                AnswerRImage.Height = imageHeight * yScale;
-            }
-            else { }
-            if (AnswerAImage.Source != null) // A
-            {
-                AnswerAImage.Width = imageWidth * xScale;
-                AnswerAImage.Height = imageHeight * yScale;
-            }
-            else { }
-            if (AnswerBImage.Source != null) // B
-            {
-                AnswerBImage.Width = imageWidth * xScale;
-                AnswerBImage.Height = imageHeight * yScale;
-            }
-            else { }
-            if (AnswerXImage.Source != null) // X
-            {
-                AnswerXImage.Width = imageWidth * xScale;
-                AnswerXImage.Height = imageHeight * yScale;
-            }
-            else { }
-            if (AnswerYImage.Source != null) // Y
-            {
-                AnswerYImage.Width = imageWidth * xScale;
-                AnswerYImage.Height = imageHeight * yScale;
-            }
-            else { }
+            
             PointsTextBlock.FontSize = 24 * yScale;
             PointsTextTranslate.Y = -2 * yScale;
             PenaltyTextBlock.FontSize = 24 * yScale;

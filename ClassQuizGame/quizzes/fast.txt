@@ -1,0 +1,8 @@
+<Quiz>
+<Title>Test</Title>
+<Question choices="2" answer="L" image="test.png" points="10" penalty="-10" must_answer="true" timer="1">
+Does this work?
+<L>Yes</L>
+<R>No</R>
+</Question>
+</Quiz>

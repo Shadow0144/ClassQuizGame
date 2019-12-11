@@ -22,6 +22,8 @@ namespace ClassQuizGame
         public Boolean timed;
         public int timer;
         public Boolean mustAnswer;
+        public Boolean canShuffleQuestion;
+        public Boolean canShuffleAnswers;
 
         public Question(String question, BitmapImage questionImage,
             String[] answers, BitmapImage[] answerImages, int correctAnswer)
@@ -37,6 +39,8 @@ namespace ClassQuizGame
             this.timed = false;
             this.timer = 0;
             this.mustAnswer = false;
+            this.canShuffleQuestion = true;
+            this.canShuffleAnswers = true;
         }
     }
 }

@@ -1,0 +1,10 @@
+<Quiz>
+	<Title>Controller Test</Title>
+	<Question choices="4" answer="A" points="500" penalty="-500" must_answer="true">
+		Who is which controller?
+		<A>P1</A>
+		<B>P2</B>
+		<X>P3</X>
+		<Y>P4</Y>
+	</Question>
+</Quiz>

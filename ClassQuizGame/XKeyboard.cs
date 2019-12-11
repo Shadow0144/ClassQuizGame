@@ -67,6 +67,8 @@ namespace ClassQuizGame
         public Action OnLShiftPressed;
         public Action OnRShiftPressed;
 
+        public Boolean Enabled;
+
         public XKeyboard()
         {
             SpaceDown = false;
@@ -112,6 +114,8 @@ namespace ClassQuizGame
             RShiftPressed = false;
 
             // TODO - Check for focus and add other handlers
+
+            Enabled = true;
         }
 
         public void Update()
@@ -120,7 +124,11 @@ namespace ClassQuizGame
             SpaceDown = Keyboard.IsKeyDown(Key.Space);
             if (OnSpacePressed != null && SpacePressed)
             {
-                OnSpacePressed();
+                if (Enabled)
+                {
+                    OnSpacePressed();
+                }
+                else { }
             }
             else { }
 
@@ -128,7 +136,11 @@ namespace ClassQuizGame
             EnterDown = Keyboard.IsKeyDown(Key.Enter);
             if (OnEnterPressed != null && EnterPressed)
             {
-                OnEnterPressed();
+                if (Enabled)
+                {
+                    OnEnterPressed();
+                }
+                else { }
             }
             else { }
 
@@ -137,7 +149,11 @@ namespace ClassQuizGame
             ADown = Keyboard.IsKeyDown(Key.A) && !Keyboard.Modifiers.HasFlag(ModifierKeys.Shift);
             if (OnAPressed != null && APressed)
             {
-                OnAPressed();
+                if (Enabled)
+                {
+                    OnAPressed();
+                }
+                else { }
             }
             else { }
 
@@ -146,7 +162,11 @@ namespace ClassQuizGame
             AShiftDown = Keyboard.IsKeyDown(Key.A) && Keyboard.Modifiers.HasFlag(ModifierKeys.Shift);
             if (OnAShiftPressed != null && AShiftPressed)
             {
-                OnAShiftPressed();
+                if (Enabled)
+                {
+                    OnAShiftPressed();
+                }
+                else { }
             }
             else { }
 
@@ -155,7 +175,11 @@ namespace ClassQuizGame
             BDown = Keyboard.IsKeyDown(Key.B) && !Keyboard.Modifiers.HasFlag(ModifierKeys.Shift);
             if (OnBPressed != null && BPressed)
             {
-                OnBPressed();
+                if (Enabled)
+                {
+                    OnBPressed();
+                }
+                else { }
             }
             else { }
 
@@ -164,7 +188,11 @@ namespace ClassQuizGame
             BShiftDown = Keyboard.IsKeyDown(Key.B) && Keyboard.Modifiers.HasFlag(ModifierKeys.Shift);
             if (OnBShiftPressed != null && BShiftPressed)
             {
-                OnBShiftPressed();
+                if (Enabled)
+                {
+                    OnBShiftPressed();
+                }
+                else { }
             }
             else { }
 
@@ -173,7 +201,11 @@ namespace ClassQuizGame
             XDown = Keyboard.IsKeyDown(Key.X) && !Keyboard.Modifiers.HasFlag(ModifierKeys.Shift);
             if (OnXPressed != null && XPressed)
             {
-                OnXPressed();
+                if (Enabled)
+                {
+                    OnXPressed();
+                }
+                else { }
             }
             else { }
 
@@ -182,7 +214,11 @@ namespace ClassQuizGame
             XShiftDown = Keyboard.IsKeyDown(Key.X) && Keyboard.Modifiers.HasFlag(ModifierKeys.Shift);
             if (OnXShiftPressed != null && XShiftPressed)
             {
-                OnXShiftPressed();
+                if (Enabled)
+                {
+                    OnXShiftPressed();
+                }
+                else { }
             }
             else { }
 
@@ -191,7 +227,11 @@ namespace ClassQuizGame
             YDown = Keyboard.IsKeyDown(Key.Y) && !Keyboard.Modifiers.HasFlag(ModifierKeys.Shift);
             if (OnYPressed != null && YPressed)
             {
-                OnYPressed();
+                if (Enabled)
+                {
+                    OnYPressed();
+                }
+                else { }
             }
             else { }
 
@@ -200,7 +240,11 @@ namespace ClassQuizGame
             YShiftPressed = Keyboard.IsKeyDown(Key.Y) && Keyboard.Modifiers.HasFlag(ModifierKeys.Shift);
             if (OnYShiftPressed != null && YShiftPressed)
             {
-                OnYShiftPressed();
+                if (Enabled)
+                {
+                    OnYShiftPressed();
+                }
+                else { }
             }
             else { }
 
@@ -209,7 +253,11 @@ namespace ClassQuizGame
             LDown = Keyboard.IsKeyDown(Key.L) && !Keyboard.Modifiers.HasFlag(ModifierKeys.Shift);
             if (OnLPressed != null && LPressed)
             {
-                OnLPressed();
+                if (Enabled)
+                {
+                    OnLPressed();
+                }
+                else { }
             }
             else { }
 
@@ -218,7 +266,11 @@ namespace ClassQuizGame
             LShiftDown = Keyboard.IsKeyDown(Key.L) && Keyboard.Modifiers.HasFlag(ModifierKeys.Shift);
             if (OnLShiftPressed != null && LShiftPressed)
             {
-                OnLShiftPressed();
+                if (Enabled)
+                {
+                    OnLShiftPressed();
+                }
+                else { }
             }
             else { }
 
@@ -227,7 +279,11 @@ namespace ClassQuizGame
             RDown = Keyboard.IsKeyDown(Key.R) && !Keyboard.Modifiers.HasFlag(ModifierKeys.Shift);
             if (OnRPressed != null && RPressed)
             {
-                OnRPressed();
+                if (Enabled)
+                {
+                    OnRPressed();
+                }
+                else { }
             }
             else { }
 
@@ -236,7 +292,11 @@ namespace ClassQuizGame
             RShiftPressed = Keyboard.IsKeyDown(Key.R) && Keyboard.Modifiers.HasFlag(ModifierKeys.Shift);
             if (OnRShiftPressed != null && RShiftPressed)
             {
-                OnRShiftPressed();
+                if (Enabled)
+                {
+                    OnRShiftPressed();
+                }
+                else { }
             }
             else { }
         }

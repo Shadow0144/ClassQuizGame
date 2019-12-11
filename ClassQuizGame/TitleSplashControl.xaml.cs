@@ -50,7 +50,11 @@ namespace ClassQuizGame
 
         private void finish()
         {
-            readySound.Play();
+            if (!Settings.Mute)
+            {
+                readySound.Play();
+            }
+            else { }
             IsComplete = true;
             App.getInstance().xKeyboard.OnSpacePressed = null;
         }

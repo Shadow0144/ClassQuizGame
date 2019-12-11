@@ -222,7 +222,11 @@ namespace ClassQuizGame
                     {
                         if (!launched)
                         {
-                            launch.Play();
+                            if (!Settings.Mute)
+                            {
+                                launch.Play();
+                            }
+                            else { }
                             launched = true;
                         }
                         else { }
@@ -319,7 +323,11 @@ namespace ClassQuizGame
                 }
             }
             explosion.Stop();
-            explosion.Play();
+            if (!Settings.Mute)
+            {
+                explosion.Play();
+            }
+            else { }
             exploded = true;
         }
 

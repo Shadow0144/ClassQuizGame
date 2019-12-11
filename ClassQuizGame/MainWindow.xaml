@@ -55,7 +55,9 @@
                 <MenuItem Header="_File">
                     <MenuItem Header="_Open Quiz..." InputGestureText="Ctrl+O" Click="Open_Quiz_Clicked"/>
                     <MenuItem x:Name="CloseQuizMenuItem" Header="_Close Quiz" InputGestureText="Ctrl+C" Click="Close_Quiz_Clicked" IsEnabled="False"/>
+                    <Separator/>
                     <MenuItem x:Name="JumpToFinalQuestionMenuItem" Header="_Jump to Final Question" InputGestureText="Ctrl+J" Click="Jump_Clicked" IsEnabled="False"/>
+                    <Separator/>
                     <MenuItem Header="_Quit" InputGestureText="Ctrl+Q" Click="Quit_Clicked"/>
                 </MenuItem>
                 <MenuItem Header="_Players">
@@ -75,7 +77,12 @@
                     </MenuItem>
                 </MenuItem>
                 <MenuItem Header="_Options">
-                    <MenuItem x:Name="FullScreenMenuItem" Header="_Full screen" IsChecked="True" IsCheckable="True" Checked="Full_Screen_Checked" Unchecked="Full_Screen_Unchecked"/>
+                    <MenuItem x:Name="FullScreenMenuItem" Header="_Full screen" IsCheckable="True" Checked="Full_Screen_Checked" Unchecked="Full_Screen_Unchecked"/>
+                    <Separator/>
+                    <MenuItem x:Name="MuteMenuItem" Header="_Mute" IsCheckable="True" Checked="Mute_Checked" Unchecked="Mute_Unchecked"/>
+                    <Separator/>
+                    <MenuItem x:Name="ShuffleQuestionsMenuItem" Header="_Shuffle Questions" IsCheckable="True" Checked="Shuffle_Questions_Checked" Unchecked="Shuffle_Questions_Unchecked"/>
+                    <MenuItem x:Name="ShuffleAnswersMenuItem" Header="S_huffle Answers" IsCheckable="True" Checked="Shuffle_Answers_Checked" Unchecked="Shuffle_Answers_Unchecked"/>
                     <Separator/>
                     <MenuItem x:Name="CorrectAnswerPointsMenuItem" Header="_Correct answer points..." Click="Correct_Answer_Points_Clicked"/>
                     <MenuItem x:Name="WrongAnswersDeductMenuItem" Header="_Wrong answers reward/deduct points" IsCheckable="True" Checked="Wrong_Answers_Deduct_Checked" Unchecked="Wrong_Answers_Deduct_Unchecked"/>
@@ -83,11 +90,12 @@
                     <MenuItem x:Name="AlwaysShowPointsMenuItem" Header="_Always show points"  IsCheckable="True" Checked="Always_Show_Points_Checked" Unchecked="Always_Show_Points_Unchecked"/>
                     <MenuItem x:Name="AlwaysShowPenaltiesMenuItem" Header="A_lways show penalties"  IsCheckable="True" Checked="Always_Show_Penalties_Checked" Unchecked="Always_Show_Penalties_Unchecked"/>
                     <Separator/>
-                    <MenuItem x:Name="WaitForAllPlayersMenuItem" Header="Wait for _all players to answer" IsCheckable="True" Checked="Wait_For_All_Players_Checked" Unchecked="Wait_For_All_Players_Unchecked"/>
-                    <MenuItem x:Name="ShowAnswersMenuItem" Header="_Grade answers immediately" IsCheckable="True" Checked="Grade_Answers_Immediately_Checked" Unchecked="Grade_Answers_Immediately_Unchecked"/>
+                    <MenuItem x:Name="WaitForAllPlayersMenuItem" Header="Wa_it for all players to answer" IsCheckable="True" Checked="Wait_For_All_Players_Checked" Unchecked="Wait_For_All_Players_Unchecked"/>
+                    <MenuItem x:Name="GradesAnswersImmediatelyMenuItem" Header="_Grade answers immediately" IsCheckable="True" Checked="Grade_Answers_Immediately_Checked" Unchecked="Grade_Answers_Immediately_Unchecked"/>
+                    <MenuItem x:Name="ShowPlayerAnswersMenuItem" Header="Sh_ow player answers"  IsCheckable="True" Checked="Show_Player_Answers_Checked" Unchecked="Show_Player_Answers_Unchecked"/>
                     <Separator/>
                     <MenuItem x:Name="QuestionsTimedMenuItem" Header="_Questions are timed" IsCheckable="True" Checked="Questions_Timed_Checked" Unchecked="Questions_Timed_Unchecked"/>
-                    <MenuItem Header="_Set question timer..." IsEnabled="True" Click="Set_Question_Timer_Clicked"/>
+                    <MenuItem Header="Set q_uestion timer..." IsEnabled="True" Click="Set_Question_Timer_Clicked"/>
                     <Separator/>
                     <MenuItem x:Name="RumbleMenuItem" Header="_Enable rumble" IsCheckable="True" Checked="Rumble_Checked" Unchecked="Rumble_Unchecked"/>
                     <Separator/>
@@ -96,6 +104,7 @@
                 </MenuItem>
                 <MenuItem Header="_Help">
                     <MenuItem Header="_Controls" Click="Controls_Clicked"/>
+                    <Separator/>
                     <MenuItem Header="_About" Click="About_Clicked"/>
                 </MenuItem>
             </Menu>

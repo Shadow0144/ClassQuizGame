@@ -136,24 +136,23 @@
             </Rectangle.OpacityMask>
         </Rectangle>
         <Image x:Name="DisconnectImage" IsHitTestVisible="False" Panel.ZIndex="3" Height="64" HorizontalAlignment="Center" VerticalAlignment="Center" Source="assets/Disconnected.png" Opacity="0.0" RenderTransformOrigin="0.5,0.5"/>
-        <Image x:Name="AnsweredImage" IsHitTestVisible="False" Panel.ZIndex="1" Height="32" HorizontalAlignment="Right"></Image>
-        <local:OutlinedTextBlock x:Name="ScorePlusTextBlock" Panel.ZIndex="1" VerticalAlignment="Center" HorizontalAlignment="Right" MinWidth="80" MaxWidth="115" FontSize="18" FontWeight="Bold" Margin="6" TextAlignment="Right">
+        <Image x:Name="AnsweredImage" IsHitTestVisible="False" Panel.ZIndex="3" Height="32" HorizontalAlignment="Right"></Image>
+        <local:OutlinedTextBlock x:Name="ScorePlusTextBlock" Panel.ZIndex="3" VerticalAlignment="Center" HorizontalAlignment="Right" MinWidth="80" MaxWidth="115" FontSize="18" FontWeight="Bold" Margin="6" TextAlignment="Right" StrokeThickness="2">
             <local:OutlinedTextBlock.RenderTransform>
                 <TranslateTransform x:Name="ScorePlusTranslate" Y="-52" X="6"/>
             </local:OutlinedTextBlock.RenderTransform>
         </local:OutlinedTextBlock>
-
-        <Image x:Name="VictoryImage" Height="32" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5">
+        <Image x:Name="VictoryImage" Height="32" Panel.ZIndex="3" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5">
             <Image.RenderTransform>
                 <TranslateTransform Y="-70"/>
             </Image.RenderTransform>
         </Image>
-        <local:NumericTextBox x:Name="ScoreTextBox" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Width="140" RenderTransformOrigin="0.5,0.5" FontSize="42" Background="Transparent" BorderBrush="Transparent" Foreground="White" FontWeight="Bold">
+        <local:NumericTextBox x:Name="ScoreTextBox" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Width="140" RenderTransformOrigin="0.5,0.5" FontSize="42" Background="Transparent" BorderBrush="Transparent" Foreground="White" FontWeight="Bold" TextChanged="OnScoreTextChanged" GotKeyboardFocus="OnGotKeyboardFocus" LostKeyboardFocus="OnLostKeyboardFocus">
             <local:NumericTextBox.RenderTransform>
                 <TranslateTransform Y="-32"/>
             </local:NumericTextBox.RenderTransform> 0
         </local:NumericTextBox>
-        <TextBox x:Name="NameTextBox" Text="Team Name" VerticalAlignment="Center" HorizontalAlignment="Center" Width="160" TextAlignment="Center" RenderTransformOrigin="0.5,0.5" FontSize="24" Background="Transparent" BorderBrush="Transparent" Foreground="White" FontWeight="Bold">
+        <TextBox x:Name="NameTextBox" Text="Team Name" VerticalAlignment="Center" HorizontalAlignment="Center" Width="160" TextAlignment="Center" RenderTransformOrigin="0.5,0.5" FontSize="24" Background="Transparent" BorderBrush="Transparent" Foreground="White" FontWeight="Bold" TextChanged="OnTeamNameTextChanged" GotKeyboardFocus="OnGotKeyboardFocus" LostKeyboardFocus="OnLostKeyboardFocus">
             <TextBox.RenderTransform>
                 <TranslateTransform Y="34"/>
             </TextBox.RenderTransform>

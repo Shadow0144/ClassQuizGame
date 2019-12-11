@@ -4,8 +4,14 @@ namespace ClassQuizGame
 {
     public static class Settings
     {
-        public static Boolean FullScreen { get => fullScreen; set { fullScreen = value; Properties.Settings.Default.fullScreen = fullScreen; } }
+        public static Boolean FullScreen { get => fullScreen; set { fullScreen = value; Properties.Settings.Default.fullScreen = fullScreen; Properties.Settings.Default.Save(); } }
         private static Boolean fullScreen = Properties.Settings.Default.fullScreen;
+        public static Boolean Mute { get => mute; set { mute = value; Properties.Settings.Default.mute = mute; Properties.Settings.Default.Save(); } }
+        private static Boolean mute = Properties.Settings.Default.mute;
+        public static Boolean ShuffleQuestions { get => shuffleQuestions; set { shuffleQuestions = value; Properties.Settings.Default.shuffleQuestions = shuffleQuestions; Properties.Settings.Default.Save(); } }
+        private static Boolean shuffleQuestions = Properties.Settings.Default.shuffleQuestions;
+        public static Boolean ShuffleAnswers { get => shuffleAnswers; set { shuffleAnswers = value; Properties.Settings.Default.shuffleAnswers = shuffleAnswers; Properties.Settings.Default.Save(); } }
+        private static Boolean shuffleAnswers = Properties.Settings.Default.shuffleAnswers;
         public static Boolean WrongDeduct { get => wrongDeduct; set { wrongDeduct = value; Properties.Settings.Default.wrongDeduct = wrongDeduct; Properties.Settings.Default.Save(); } }
         private static Boolean wrongDeduct = Properties.Settings.Default.wrongDeduct;
         public static int RightPoints { get => rightPoints; set { rightPoints = value; Properties.Settings.Default.rightPoints = rightPoints; Properties.Settings.Default.Save(); } }
@@ -16,8 +22,10 @@ namespace ClassQuizGame
         private static Boolean alwaysShowPoints;
         public static Boolean AlwaysShowPenalties { get => alwaysShowPenalties; set { alwaysShowPenalties = value; Properties.Settings.Default.alwaysShowPenalties = alwaysShowPenalties; Properties.Settings.Default.Save(); } }
         private static Boolean alwaysShowPenalties;
-        public static Boolean WaitForAllPlayers { get => waitForAllPlayers; set { waitForAllPlayers = value; Properties.Settings.Default.waitForAllPlayers = wrongDeduct; Properties.Settings.Default.Save(); } }
+        public static Boolean WaitForAllPlayers { get => waitForAllPlayers; set { waitForAllPlayers = value; Properties.Settings.Default.waitForAllPlayers = waitForAllPlayers; Properties.Settings.Default.Save(); } }
         private static Boolean waitForAllPlayers = Properties.Settings.Default.waitForAllPlayers;
+        public static Boolean GradeAnswersImmediately { get => gradeAnswersImmediately; set { gradeAnswersImmediately = value; Properties.Settings.Default.gradeAnswersImmediately = gradeAnswersImmediately; Properties.Settings.Default.Save(); } }
+        private static Boolean gradeAnswersImmediately = Properties.Settings.Default.gradeAnswersImmediately;
         public static Boolean ShowAnswers { get => showAnswers; set { showAnswers = value; Properties.Settings.Default.showAnswers = showAnswers; Properties.Settings.Default.Save(); } }
         private static Boolean showAnswers = Properties.Settings.Default.showAnswers;
         public static Boolean QuestionsTimed { get => questionsTimed; set { questionsTimed = value; Properties.Settings.Default.questionsTimed = questionsTimed; Properties.Settings.Default.Save(); } }

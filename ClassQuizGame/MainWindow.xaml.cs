@@ -21,8 +21,6 @@ namespace ClassQuizGame
         {
             InitializeComponent();
 
-            toggleWindowFullScreen();
-
             instance = this;
 
             xScale = 1.0f;
@@ -41,9 +39,14 @@ namespace ClassQuizGame
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             // Load the settings
+            FullScreenMenuItem.IsChecked = Settings.FullScreen;
+            MuteMenuItem.IsChecked = Settings.Mute;
+            ShuffleQuestionsMenuItem.IsChecked = Settings.ShuffleQuestions;
+            ShuffleAnswersMenuItem.IsChecked = Settings.ShuffleAnswers;
             WrongAnswersDeductMenuItem.IsChecked = Settings.WrongDeduct;
             WaitForAllPlayersMenuItem.IsChecked = Settings.WaitForAllPlayers;
-            ShowAnswersMenuItem.IsChecked = Settings.ShowAnswers;
+            GradesAnswersImmediatelyMenuItem.IsChecked = Settings.GradeAnswersImmediately;
+            ShowPlayerAnswersMenuItem.IsChecked = Settings.ShowAnswers;
             QuestionsTimedMenuItem.IsChecked = Settings.QuestionsTimed;
             RumbleMenuItem.IsChecked = Settings.Rumble;
             RequireProctorMenuItem.IsChecked = Settings.RequireProctor;
@@ -61,6 +64,8 @@ namespace ClassQuizGame
                 }
                 setupPlayer(i);
             }
+
+            toggleWindowFullScreen();
         }
 
         private void Window_Unloaded(object sender, RoutedEventArgs e)
@@ -167,9 +172,12 @@ namespace ClassQuizGame
             Nullable<bool> result = dialog.ShowDialog();
             if (result == true)
             {
-                QuizControl.loadQuiz(dialog.FileName);
-                CloseQuizMenuItem.IsEnabled = true;
-                JumpToFinalQuestionMenuItem.IsEnabled = true;
+                if (QuizControl.loadQuiz(dialog.FileName))
+                {
+                    CloseQuizMenuItem.IsEnabled = true;
+                    JumpToFinalQuestionMenuItem.IsEnabled = true;
+                }
+                else { }
             }
             else { }
         }
@@ -302,6 +310,36 @@ namespace ClassQuizGame
             toggleWindowFullScreen();
         }
 
+        private void Mute_Checked(object sender, EventArgs e)
+        {
+            Settings.Mute = true;
+        }
+
+        private void Mute_Unchecked(object sender, EventArgs e)
+        {
+            Settings.Mute = false;
+        }
+
+        private void Shuffle_Questions_Checked(object sender, EventArgs e)
+        {
+            Settings.ShuffleQuestions = true;
+        }
+
+        private void Shuffle_Questions_Unchecked(object sender, EventArgs e)
+        {
+            Settings.ShuffleQuestions = false;
+        }
+
+        private void Shuffle_Answers_Checked(object sender, EventArgs e)
+        {
+            Settings.ShuffleAnswers = true;
+        }
+
+        private void Shuffle_Answers_Unchecked(object sender, EventArgs e)
+        {
+            Settings.ShuffleAnswers = false;
+        }
+
         private void Correct_Answer_Points_Clicked(object sender, EventArgs e)
         {
             CorrectAnswerPointsPopup.IsOpen = true;
@@ -380,10 +418,20 @@ namespace ClassQuizGame
 
         private void Grade_Answers_Immediately_Checked(object sender, EventArgs e)
         {
-            Settings.ShowAnswers = true;
+            Settings.GradeAnswersImmediately = true;
         }
 
         private void Grade_Answers_Immediately_Unchecked(object sender, EventArgs e)
+        {
+            Settings.GradeAnswersImmediately = false;
+        }
+
+        private void Show_Player_Answers_Checked(object sender, EventArgs e)
+        {
+            Settings.ShowAnswers = true;
+        }
+
+        private void Show_Player_Answers_Unchecked(object sender, EventArgs e)
         {
             Settings.ShowAnswers = false;
         }
@@ -565,6 +613,16 @@ namespace ClassQuizGame
         private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Keyboard.Focus(QuizControl);
+        }
+
+        public void LoseKeyboardFocus()
+        {
+            App.getInstance().xKeyboard.Enabled = false;
+        }
+
+        public void GainKeyboardFocus()
+        {
+            App.getInstance().xKeyboard.Enabled = true;
         }
     }
 }

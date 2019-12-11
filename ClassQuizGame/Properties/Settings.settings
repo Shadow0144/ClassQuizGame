@@ -11,7 +11,7 @@
     <Setting Name="wrongPoints" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">-50</Value>
     </Setting>
-    <Setting Name="showAnswers" Type="System.Boolean" Scope="User">
+    <Setting Name="gradeAnswersImmediately" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="questionsTimed" Type="System.Boolean" Scope="User">
@@ -43,6 +43,18 @@
     </Setting>
     <Setting Name="fullScreen" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="shuffleQuestions" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="shuffleAnswers" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="showAnswers" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="mute" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
 </SettingsFile>

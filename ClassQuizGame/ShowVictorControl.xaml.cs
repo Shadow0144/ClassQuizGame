@@ -94,7 +94,7 @@ namespace ClassQuizGame
             for (int i = 0; i < 5; i++)
             {
                 PlayerControl control = getController(i);
-                if (control.score == topScore)
+                if (control.inGame && control.score == topScore)
                 {
                     Point controlPoint = MainWindow.getInstance().TranslatePoint(new Point(0.0f, 0.0f), control);
                     Point borderPoint = MainWindow.getInstance().TranslatePoint(new Point(0.0f, 0.0f), getGrid(i));
@@ -120,8 +120,12 @@ namespace ClassQuizGame
 
             victorySound = new MediaPlayer();
             victorySound.ScrubbingEnabled = false;
-            victorySound.Open(new Uri(@"assets/victory.mp3", UriKind.Relative));
-            victorySound.Play();
+            if (!Settings.Mute)
+            {
+                victorySound.Open(new Uri(@"assets/victory.mp3", UriKind.Relative));
+                victorySound.Play();
+            }
+            else { }
 
             initialTimer = new DispatcherTimer();
             initialTimer.Interval = new TimeSpan(0, 0, INITIAL_WAIT);

@@ -59,7 +59,7 @@ namespace ClassQuizGame
             readyPlayers[4] = false;
         }
 
-        public void loadQuiz(String gameFile)
+        public Boolean loadQuiz(String gameFile)
         {
             this.gameFile = gameFile;
 
@@ -83,6 +83,8 @@ namespace ClassQuizGame
             {
                 MainWindow.getInstance().PopupFailedToLoadQuiz();
             }
+
+            return succeeded;
         }
 
         public void close()

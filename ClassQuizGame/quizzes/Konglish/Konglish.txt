@@ -52,12 +52,12 @@
 		<X>Foot phone</X>
 		<Y>Sell phone</Y>
 	</Question>
-	<Question choices="4" answer="Y">
 	<Question choices="2" answer="L">
 		What do you say when you see your friend?
 		<L>"Nice to see you!"</L>
 		<R>"Nice to meet you!"</R>
 	</Question>
+	<Question choices="4" answer="Y">
 		Which is the right word for "콘센트"?
 		<A>Convent</A>
 		<B>Consent</B>
@@ -121,8 +121,8 @@
 		<L>A/C</L>
 		<R>Air-con</R>
 	</Question>
-	<Question choices="2" answer="L">
-		What do you say when you see your friend?
+	<Question choices="2" answer="R">
+		What do you say when you see someone for the first time?
 		<L>"Nice to see you!"</L>
 		<R>"Nice to meet you!"</R>
 	</Question>
@@ -168,7 +168,7 @@
 		<X>Open Car</X>
 		<Y>Motorcycle</Y>
 	</Question>
-	<Question choices="4" answer="X" points="500" penalty="-500" must_answer="true" timer="3">
+	<Question choices="4" answer="X" points="500" penalty="-500" must_answer="true" timer="15" can_shuffle_question="false">
 		How do you spell my name?
 		<A>Callbin</A>
 		<B>Corvin</B>

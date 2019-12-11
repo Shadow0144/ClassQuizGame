@@ -162,11 +162,43 @@ namespace ClassQuizGame
             else { }
         }
 
-        private void setAllAnswers(int answer)
+        private void setAllAnswers(int answerIndex)
         {
+            AnswerBox.Answer answer = AnswerBox.Answer.None;
+            switch (question.answerCount)
+            {
+                case 2:
+                    switch (answerIndex)
+                    {
+                        case 0:
+                            answer = AnswerBox.Answer.L;
+                            break;
+                        case 1:
+                            answer = AnswerBox.Answer.R;
+                            break;
+                    }
+                    break;
+                case 4:
+                    switch (answerIndex)
+                    {
+                        case 0:
+                            answer = AnswerBox.Answer.A;
+                            break;
+                        case 1:
+                            answer = AnswerBox.Answer.B;
+                            break;
+                        case 2:
+                            answer = AnswerBox.Answer.X;
+                            break;
+                        case 3:
+                            answer = AnswerBox.Answer.Y;
+                            break;
+                    }
+                    break;
+            }
             for (int i = 0; i < 5; i++)
             {
-                checkButton(MainWindow.getInstance().GetPlayerControl(i), answer);
+                checkButton(MainWindow.getInstance().GetPlayerControl(i), answerIndex, answer);
             }
         }
 
@@ -180,30 +212,30 @@ namespace ClassQuizGame
                     case 2:
                         if (playerControl.IsLDown())
                         {
-                            checkButton(playerControl, 0);
+                            checkButton(playerControl, 0, AnswerBox.Answer.L);
                         }
                         else if (playerControl.IsRDown())
                         {
-                            checkButton(playerControl, 1);
+                            checkButton(playerControl, 1, AnswerBox.Answer.R);
                         }
                         else { }
                         break;
                     case 4:
                         if (playerControl.IsADown())
                         {
-                            checkButton(playerControl, 0);
+                            checkButton(playerControl, 0, AnswerBox.Answer.A);
                         }
                         else if (playerControl.IsBDown())
                         {
-                            checkButton(playerControl, 1);
+                            checkButton(playerControl, 1, AnswerBox.Answer.B);
                         }
                         else if (playerControl.IsXDown())
                         {
-                            checkButton(playerControl, 2);
+                            checkButton(playerControl, 2, AnswerBox.Answer.X);
                         }
                         else if (playerControl.IsYDown())
                         {
-                            checkButton(playerControl, 3);
+                            checkButton(playerControl, 3, AnswerBox.Answer.Y);
                         }
                         else { }
                         break;
@@ -212,30 +244,39 @@ namespace ClassQuizGame
             else { }
         }
 
-        private void checkButton(PlayerControl playerControl, int index)
+        private void checkButton(PlayerControl playerControl, int index, AnswerBox.Answer answer)
         {
             if (playerControl.inGame && !timerStarted)
             {
+                playerControl.showAnswers = (Settings.GradeAnswersImmediately && !allMustAnswer);
                 playerControl.canAnswer = false;
                 playersAnswered++;
                 if (index < answerCount && question.correctAnswer == index)
                 {
-                    playerControl.setAnswered(PlayerControl.AnswerType.correct);
-                    if (Settings.ShowAnswers || allMustAnswer)
+                    playerControl.setAnswered(answer, PlayerControl.AnswerResult.correct);
+                    if (Settings.GradeAnswersImmediately && !allMustAnswer)
                     {
                         playerControl.rightRumble();
-                        correctMediaPlayer.Stop();
-                        correctMediaPlayer.Open(new Uri(@"assets/correct.mp3", UriKind.Relative));
-                        correctMediaPlayer.Play();
+                        if (!Settings.Mute)
+                        {
+                            correctMediaPlayer.Stop();
+                            correctMediaPlayer.Open(new Uri(@"assets/correct.mp3", UriKind.Relative));
+                            correctMediaPlayer.Play();
+                        }
+                        else { }
                     }
                     else
                     {
                         playerControl.answerRumble();
-                        answeredMediaPlayer.Stop();
-                        answeredMediaPlayer.Open(new Uri(@"assets/answered.mp3", UriKind.Relative));
-                        answeredMediaPlayer.Play();
+                        if (!Settings.Mute)
+                        {
+                            answeredMediaPlayer.Stop();
+                            answeredMediaPlayer.Open(new Uri(@"assets/answered.mp3", UriKind.Relative));
+                            answeredMediaPlayer.Play();
+                        }
+                        else { }
                     }
-                    if (!Settings.WaitForAllPlayers)
+                    if (!Settings.WaitForAllPlayers && !allMustAnswer)
                     {
                         endTimer.Start();
                         timerStarted = true;
@@ -244,20 +285,28 @@ namespace ClassQuizGame
                 }
                 else
                 {
-                    playerControl.setAnswered(PlayerControl.AnswerType.wrong);
-                    if (Settings.ShowAnswers || allMustAnswer)
+                    playerControl.setAnswered(answer, PlayerControl.AnswerResult.wrong);
+                    if (Settings.GradeAnswersImmediately && !allMustAnswer)
                     {
                         playerControl.wrongRumble();
-                        wrongMediaPlayer.Stop();
-                        wrongMediaPlayer.Open(new Uri(@"assets/wrong.mp3", UriKind.Relative));
-                        wrongMediaPlayer.Play();
+                        if (!Settings.Mute)
+                        {
+                            wrongMediaPlayer.Stop();
+                            wrongMediaPlayer.Open(new Uri(@"assets/wrong.mp3", UriKind.Relative));
+                            wrongMediaPlayer.Play();
+                        }
+                        else { }
                     }
                     else
                     {
                         playerControl.answerRumble();
-                        answeredMediaPlayer.Stop();
-                        answeredMediaPlayer.Open(new Uri(@"assets/answered.mp3", UriKind.Relative));
-                        answeredMediaPlayer.Play();
+                        if (!Settings.Mute)
+                        {
+                            answeredMediaPlayer.Stop();
+                            answeredMediaPlayer.Open(new Uri(@"assets/answered.mp3", UriKind.Relative));
+                            answeredMediaPlayer.Play();
+                        }
+                        else { }
                     }
                 }
                 if (playersAnswered == App.getInstance().players)
@@ -304,9 +353,9 @@ namespace ClassQuizGame
                     for (int i = 0; i < 5; i++)
                     {
                         PlayerControl player = MainWindow.getInstance().GetPlayerControl(i);
-                        if (player.canAnswer)
+                        if (player.canAnswer && player.inGame)
                         {
-                            player.setAnswered(PlayerControl.AnswerType.wrong);
+                            player.setAnswered(AnswerBox.Answer.None, PlayerControl.AnswerResult.wrong);
                             player.wrongRumble();
                         }
                         else { }
@@ -322,35 +371,14 @@ namespace ClassQuizGame
             answerCount = question.answers.Length;
             if (answerCount == 2)
             {
-                AnswerAPanel.Visibility = System.Windows.Visibility.Collapsed;
-                AnswerBPanel.Visibility = System.Windows.Visibility.Collapsed;
-                AnswerXPanel.Visibility = System.Windows.Visibility.Collapsed;
-                AnswerYPanel.Visibility = System.Windows.Visibility.Collapsed;
-                AnswerLTextBox.Text = question.answers[0];
-                AnswerLImage.Source = question.answerImages[0];
-                AnswerRTextBox.Text = question.answers[1];
-                AnswerRImage.Source = question.answerImages[1];
-
-                if (question.answers[0].Length == 0)
-                {
-                    AnswerLTextBox.Visibility = System.Windows.Visibility.Collapsed;
-                }
-                else { }
-                if (question.answerImages[0] == null)
-                {
-                    AnswerLImage.Visibility = System.Windows.Visibility.Collapsed;
-                }
-                else { }
-                if (question.answers[1].Length == 0)
-                {
-                    AnswerRTextBox.Visibility = System.Windows.Visibility.Collapsed;
-                }
-                else { }
-                if (question.answerImages[1] == null)
-                {
-                    AnswerRImage.Visibility = System.Windows.Visibility.Collapsed;
-                }
-                else { }
+                AnswerABox.Visibility = System.Windows.Visibility.Collapsed;
+                AnswerBBox.Visibility = System.Windows.Visibility.Collapsed;
+                AnswerXBox.Visibility = System.Windows.Visibility.Collapsed;
+                AnswerYBox.Visibility = System.Windows.Visibility.Collapsed;
+                AnswerLBox.setAnswer(AnswerBox.Answer.L);
+                AnswerRBox.setAnswer(AnswerBox.Answer.R);
+                AnswerLBox.setAnswerContent(question.answers[0], question.answerImages[0]);
+                AnswerRBox.setAnswerContent(question.answers[1], question.answerImages[1]);
 
                 ButtonsImage.Source = twoButtons;
 
@@ -359,57 +387,16 @@ namespace ClassQuizGame
             }
             else if (answerCount == 4)
             {
-                AnswerATextBox.Text = question.answers[0];
-                AnswerAImage.Source = question.answerImages[0];
-                AnswerBTextBox.Text = question.answers[1];
-                AnswerBImage.Source = question.answerImages[1];
-                AnswerXTextBox.Text = question.answers[2];
-                AnswerXImage.Source = question.answerImages[2];
-                AnswerYTextBox.Text = question.answers[3];
-                AnswerYImage.Source = question.answerImages[3];
-                AnswerLPanel.Visibility = System.Windows.Visibility.Collapsed;
-                AnswerRPanel.Visibility = System.Windows.Visibility.Collapsed;
-
-                if (question.answers[0].Length == 0)
-                {
-                    AnswerATextBox.Visibility = System.Windows.Visibility.Collapsed;
-                }
-                else { }
-                if (question.answerImages[0] == null)
-                {
-                    AnswerAImage.Visibility = System.Windows.Visibility.Collapsed;
-                }
-                else { }
-                if (question.answers[1].Length == 0)
-                {
-                    AnswerBTextBox.Visibility = System.Windows.Visibility.Collapsed;
-                }
-                else { }
-                if (question.answerImages[1] == null)
-                {
-                    AnswerBImage.Visibility = System.Windows.Visibility.Collapsed;
-                }
-                else { }
-                if (question.answers[2].Length == 0)
-                {
-                    AnswerXTextBox.Visibility = System.Windows.Visibility.Collapsed;
-                }
-                else { }
-                if (question.answerImages[2] == null)
-                {
-                    AnswerXImage.Visibility = System.Windows.Visibility.Collapsed;
-                }
-                else { }
-                if (question.answers[3].Length == 0)
-                {
-                    AnswerYTextBox.Visibility = System.Windows.Visibility.Collapsed;
-                }
-                else { }
-                if (question.answerImages[3] == null)
-                {
-                    AnswerYImage.Visibility = System.Windows.Visibility.Collapsed;
-                }
-                else { }
+                AnswerABox.setAnswer(AnswerBox.Answer.A);
+                AnswerBBox.setAnswer(AnswerBox.Answer.B);
+                AnswerXBox.setAnswer(AnswerBox.Answer.X);
+                AnswerYBox.setAnswer(AnswerBox.Answer.Y);
+                AnswerABox.setAnswerContent(question.answers[0], question.answerImages[0]);
+                AnswerBBox.setAnswerContent(question.answers[1], question.answerImages[1]);
+                AnswerXBox.setAnswerContent(question.answers[2], question.answerImages[2]);
+                AnswerYBox.setAnswerContent(question.answers[3], question.answerImages[3]);
+                AnswerLBox.Visibility = System.Windows.Visibility.Collapsed;
+                AnswerRBox.Visibility = System.Windows.Visibility.Collapsed;
 
                 ButtonsImage.Source = fourButtons;
 
@@ -438,53 +425,17 @@ namespace ClassQuizGame
             }
             else { }
             QuestionTextBlock.FontSize = 32 * yScale;
-            int answerFontSize = 24;
-            AnswerATextBox.FontSize = answerFontSize * yScale;
-            AnswerBTextBox.FontSize = answerFontSize * yScale;
-            AnswerXTextBox.FontSize = answerFontSize * yScale;
-            AnswerYTextBox.FontSize = answerFontSize * yScale;
-            AnswerLTextBox.FontSize = answerFontSize * yScale;
-            AnswerRTextBox.FontSize = answerFontSize * yScale;
+
+            AnswerABox.setScale(xScale, yScale);
+            AnswerBBox.setScale(xScale, yScale);
+            AnswerXBox.setScale(xScale, yScale);
+            AnswerYBox.setScale(xScale, yScale);
+            AnswerLBox.setScale(xScale, yScale);
+            AnswerRBox.setScale(xScale, yScale);
+
             ButtonsImage.Height = 128 * yScale;
             TimerProgressBar.Height = 20 * yScale;
-            int imageWidth = 120;
-            int imageHeight = 120;
-            if (AnswerLImage.Source != null) // L
-            {
-                AnswerLImage.Width = imageWidth * xScale;
-                AnswerLImage.Height = imageHeight * yScale;
-            }
-            else { }
-            if (AnswerRImage.Source != null) // R
-            {
-                AnswerRImage.Width = imageWidth * xScale;
-                AnswerRImage.Height = imageHeight * yScale;
-            }
-            else { }
-            if (AnswerAImage.Source != null) // A
-            {
-                AnswerAImage.Width = imageWidth * xScale;
-                AnswerAImage.Height = imageHeight * yScale;
-            }
-            else { }
-            if (AnswerBImage.Source != null) // B
-            {
-                AnswerBImage.Width = imageWidth * xScale;
-                AnswerBImage.Height = imageHeight * yScale;
-            }
-            else { }
-            if (AnswerXImage.Source != null) // X
-            {
-                AnswerXImage.Width = imageWidth * xScale;
-                AnswerXImage.Height = imageHeight * yScale;
-            }
-            else { }
-            if (AnswerYImage.Source != null) // Y
-            {
-                AnswerYImage.Width = imageWidth * xScale;
-                AnswerYImage.Height = imageHeight * yScale;
-            }
-            else { }
+
             PointsTextBlock.FontSize = 24 * yScale;
             PointsTextTranslate.Y = -2 * yScale;
             PenaltyTextBlock.FontSize = 24 * yScale;

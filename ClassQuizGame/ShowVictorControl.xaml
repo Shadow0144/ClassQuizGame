@@ -28,7 +28,7 @@
                 </LinearGradientBrush>
             </local:OutlinedTextBlock.Fill> Winner:
         </local:OutlinedTextBlock>
-        <Grid Grid.Row="2" Grid.Column="1">
+        <Grid Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
@@ -41,8 +41,8 @@
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Grid x:Name="TeamKWinGrid" Visibility="Collapsed">
-                <Border Grid.Row="0" Grid.Column="1" BorderBrush="#FF91914B" BorderThickness="2" CornerRadius="3" Padding="0" Margin="4,0">
+            <Grid x:Name="TeamKWinGrid" Grid.Row="0" Grid.Column="1" Visibility="Collapsed">
+                <Border BorderBrush="#FF91914B" BorderThickness="2" CornerRadius="3" Padding="0" Margin="4,0">
                     <Border.Background>
                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                             <GradientStop Color="#FFFFF000" Offset="0"/>
@@ -76,8 +76,8 @@
                     </Rectangle.RenderTransform>
                 </Rectangle>
             </Grid>
-            <Grid x:Name="Team1WinGrid" Visibility="Collapsed">
-                <Border Grid.Row="0" Grid.Column="2" BorderBrush="#FF91914B" BorderThickness="2" CornerRadius="3" Padding="0" Margin="4,0">
+            <Grid x:Name="Team1WinGrid" Grid.Row="0" Grid.Column="2" Visibility="Collapsed">
+                <Border BorderBrush="#FF91914B" BorderThickness="2" CornerRadius="3" Padding="0" Margin="4,0">
                     <Border.Background>
                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                             <GradientStop Color="#FFFFF000" Offset="0"/>
@@ -111,8 +111,8 @@
                     </Rectangle.RenderTransform>
                 </Rectangle>
             </Grid>
-            <Grid x:Name="Team2WinGrid" Visibility="Collapsed">
-                <Border Grid.Row="0" Grid.Column="3" BorderBrush="#FF91914B" BorderThickness="2" CornerRadius="3" Margin="4,0">
+            <Grid x:Name="Team2WinGrid" Grid.Row="0" Grid.Column="3" Visibility="Collapsed">
+                <Border BorderBrush="#FF91914B" BorderThickness="2" CornerRadius="3" Margin="4,0">
                     <Border.Background>
                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                             <GradientStop Color="#FFFFF000" Offset="0"/>
@@ -146,8 +146,8 @@
                     </Rectangle.RenderTransform>
                 </Rectangle>
             </Grid>
-            <Grid x:Name="Team3WinGrid" Visibility="Collapsed">
-                <Border Grid.Row="0" Grid.Column="4" BorderBrush="#FF91914B" BorderThickness="2" CornerRadius="3" Margin="4,0">
+            <Grid x:Name="Team3WinGrid" Grid.Row="0" Grid.Column="4" Visibility="Collapsed">
+                <Border BorderBrush="#FF91914B" BorderThickness="2" CornerRadius="3" Margin="4,0">
                     <Border.Background>
                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                             <GradientStop Color="#FFFFF000" Offset="0"/>
@@ -181,8 +181,8 @@
                     </Rectangle.RenderTransform>
                 </Rectangle>
             </Grid>
-            <Grid x:Name="Team4WinGrid" Visibility="Collapsed">
-                <Border Grid.Row="0" Grid.Column="5" BorderBrush="#FF91914B" BorderThickness="2" CornerRadius="3" Margin="4,0">
+            <Grid x:Name="Team4WinGrid" Grid.Row="0" Grid.Column="5" Visibility="Collapsed">
+                <Border BorderBrush="#FF91914B" BorderThickness="2" CornerRadius="3" Margin="4,0">
                     <Border.Background>
                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                             <GradientStop Color="#FFFFF000" Offset="0"/>

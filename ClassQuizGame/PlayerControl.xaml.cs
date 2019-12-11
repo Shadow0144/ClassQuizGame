@@ -49,6 +49,8 @@ namespace ClassQuizGame
         private MediaPlayer readiedSound;
         public Boolean readied;
 
+        public Boolean showAnswers;
+
         private RumbleHelper rumbleHelper;
 
         public enum ControlSource
@@ -61,13 +63,15 @@ namespace ClassQuizGame
         public XInputController controller;
         public XKeyboard keyboard;
 
-        public enum AnswerType
+        public AnswerBox.Answer lastAnswer;
+
+        public enum AnswerResult
         {
             no_answer,
             wrong,
             correct
         }
-        public AnswerType lastAnswer;
+        private AnswerResult lastAnswerResult;
 
         public PlayerControl()
         {
@@ -75,6 +79,7 @@ namespace ClassQuizGame
 
             InControlWidth.To = WIDTH;
             OutControlWidth.From = WIDTH;
+            showAnswers = true;
         }
         
         public void checkConnected()
@@ -106,7 +111,7 @@ namespace ClassQuizGame
             name = NameTextBox.Text;
             score = 0;
             canAnswer = false;
-            lastAnswer = AnswerType.no_answer;
+            lastAnswerResult = AnswerResult.no_answer;
             player = i;
             setColor();
             readiedSound = new MediaPlayer();
@@ -122,7 +127,7 @@ namespace ClassQuizGame
             name = NameTextBox.Text;
             score = 0;
             canAnswer = false;
-            lastAnswer = AnswerType.no_answer;
+            lastAnswerResult = AnswerResult.no_answer;
             player = i;
             setColor();
             readiedSound = new MediaPlayer();
@@ -150,17 +155,18 @@ namespace ClassQuizGame
             }
         }
 
-        public void setAnswered(AnswerType answerType)
+        public void setAnswered(AnswerBox.Answer answer, AnswerResult answerType)
         {
-            lastAnswer = answerType;
+            lastAnswer = answer;
+            lastAnswerResult = answerType;
 
             switch (answerType)
             {
-                case AnswerType.no_answer:
+                case AnswerResult.no_answer:
                     AnsweredImage.Source = noImageSource;
                     break;
-                case AnswerType.wrong:
-                    if (Settings.ShowAnswers)
+                case AnswerResult.wrong:
+                    if (showAnswers)
                     {
                         AnsweredImage.Source = wrongImageSource;
                     }
@@ -169,8 +175,8 @@ namespace ClassQuizGame
                         AnsweredImage.Source = answeredImageSource;
                     }
                     break;
-                case AnswerType.correct:
-                    if (Settings.ShowAnswers)
+                case AnswerResult.correct:
+                    if (showAnswers)
                     {
                         AnsweredImage.Source = correctImageSource;
                     }
@@ -182,17 +188,22 @@ namespace ClassQuizGame
             }
         }
 
+        public AnswerResult getLastAnswerResult()
+        {
+            return lastAnswerResult;
+        }
+
         public void revealAnswer()
         {
-            switch (lastAnswer)
+            switch (lastAnswerResult)
             {
-                case AnswerType.no_answer:
+                case AnswerResult.no_answer:
                     AnsweredImage.Source = noImageSource;
                     break;
-                case AnswerType.wrong:
+                case AnswerResult.wrong:
                     AnsweredImage.Source = wrongImageSource;
                     break;
-                case AnswerType.correct:
+                case AnswerResult.correct:
                     AnsweredImage.Source = correctImageSource;
                     break;
             }
@@ -257,12 +268,12 @@ namespace ClassQuizGame
             if (positive)
             {
                 ScorePlusTextBlock.Fill = Brushes.Green;
-                ScorePlusTextBlock.Stroke = Brushes.DarkGreen;
+                ScorePlusTextBlock.Stroke = Brushes.White;
             }
             else
             {
                 ScorePlusTextBlock.Fill = Brushes.Red;
-                ScorePlusTextBlock.Stroke = Brushes.DarkRed;
+                ScorePlusTextBlock.Stroke = Brushes.White;
             }
             this.score += score;
             ScoreTextBox.Text = ""+this.score;
@@ -271,7 +282,7 @@ namespace ClassQuizGame
         public void resetScoreDisplay()
         {
             ScorePlusTextBlock.Text = "";
-            setAnswered(AnswerType.no_answer);
+            setAnswered(AnswerBox.Answer.None, AnswerResult.no_answer);
             ScoreTextBox.Text = "" + this.score;
         }
 
@@ -300,8 +311,12 @@ namespace ClassQuizGame
         public void ready()
         {
             ReadyImage.Visibility = Visibility.Visible;
-            readiedSound.Open(new Uri(@"assets/ready.mp3", UriKind.Relative));
-            readiedSound.Play();
+            if (!Settings.Mute)
+            {
+                readiedSound.Open(new Uri(@"assets/ready.mp3", UriKind.Relative));
+                readiedSound.Play();
+            }
+            else { }
             readied = true;
         }
 
@@ -517,6 +532,35 @@ namespace ClassQuizGame
 
             InControlWidth.To = WIDTH * scale;
             OutControlWidth.From = WIDTH * scale;
+        }
+
+        private void OnScoreTextChanged(object sender, TextChangedEventArgs e)
+        {
+            int newScore = Int32.Parse(ScoreTextBox.Text);
+            if (newScore != score)
+            {
+                score = newScore;
+            }
+            else { }
+        }
+
+        private void OnTeamNameTextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (name == null || !name.Equals(NameTextBox.Text))
+            {
+                name = NameTextBox.Text;
+            }
+            else { }
+        }
+
+        private void OnGotKeyboardFocus(object sender, System.Windows.Input.KeyboardFocusChangedEventArgs e)
+        {
+            MainWindow.getInstance().LoseKeyboardFocus();
+        }
+
+        private void OnLostKeyboardFocus(object sender, System.Windows.Input.KeyboardFocusChangedEventArgs e)
+        {
+            MainWindow.getInstance().GainKeyboardFocus();
         }
     }
 }

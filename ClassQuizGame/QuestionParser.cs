@@ -142,9 +142,29 @@ namespace ClassQuizGame
                         question.mustAnswer = Boolean.Parse(questionNode.Attributes["must_answer"].Value);
                     }
                     else { }
+                    if (questionNode.Attributes["can_shuffle_question"] != null)
+                    {
+                        question.canShuffleQuestion = Boolean.Parse(questionNode.Attributes["can_shuffle_question"].Value);
+                    }
+                    else { }
+                    if (questionNode.Attributes["can_shuffle_answers"] != null)
+                    {
+                        question.canShuffleAnswers = Boolean.Parse(questionNode.Attributes["can_shuffle_answers"].Value);
+                    }
+                    else { }
                     questions[i++] = question;
                     location++;
                 }
+                if (Settings.ShuffleQuestions)
+                {
+                    questions = shuffleQuestions(questions);
+                }
+                else { }
+                if (Settings.ShuffleAnswers)
+                {
+                    questions = shuffleAnswers(questions);
+                }
+                else { }
                 succeeded = true;
             }
             catch (Exception)
@@ -182,6 +202,74 @@ namespace ClassQuizGame
                 r = null;
             }
             return r;
+        }
+
+        private Question[] shuffleQuestions(Question[] questions)
+        {
+            Random random = new Random(DateTime.Now.Millisecond);
+            Question[] shuffledQuestions = new Question[questions.Length];
+            int[] shuffledQuestionIndices = Enumerable.Range(0, questions.Length).ToArray();
+            shuffledQuestionIndices = shuffledQuestionIndices.OrderBy(x => random.Next()).ToArray();
+
+            for (int i = 0; i < questions.Length; i++)
+            {
+                shuffledQuestions[i] = questions[shuffledQuestionIndices[i]];
+            }
+
+            for (int i = 0; i < questions.Length; i++)
+            {
+                if (!questions[i].canShuffleQuestion)
+                {
+                    int index = -1;
+                    int j = 0;
+                    for (; j < questions.Length; j++)
+                    {
+                        if (shuffledQuestionIndices[j] == i)
+                        {
+                            index = j;
+                            break;
+                        }
+                        else { }
+                    }
+                    shuffledQuestions[index] = shuffledQuestions[i];
+                    shuffledQuestions[i] = questions[i];
+                }
+                else { }
+            }
+
+            return shuffledQuestions;
+        }
+
+        private Question[] shuffleAnswers(Question[] questions)
+        {
+            Random random = new Random(DateTime.Now.Millisecond);
+
+            for (int i = 0; i < questions.Length; i++)
+            {
+                if (questions[i].canShuffleAnswers)
+                {
+                    String[] shuffledAnswers = new String[questions[i].answerCount];
+                    BitmapImage[] shuffledAnswerImages = new BitmapImage[questions[i].answerCount];
+                    int[] shuffledAnswerIndices = Enumerable.Range(0, questions[i].answerCount).ToArray();
+                    shuffledAnswerIndices = shuffledAnswerIndices.OrderBy(x => random.Next()).ToArray();
+                    int shuffledCorrectAnswer = -1;
+                    for (int j = 0; j < questions[i].answerCount; j++)
+                    {
+                        shuffledAnswers[j] = questions[i].answers[shuffledAnswerIndices[j]];
+                        shuffledAnswerImages[j] = questions[i].answerImages[shuffledAnswerIndices[j]];
+                        if (shuffledAnswerIndices[j] == questions[i].correctAnswer)
+                        {
+                            shuffledCorrectAnswer = j;
+                        }
+                        else { }
+                    }
+                    questions[i].answers = shuffledAnswers;
+                    questions[i].answerImages = shuffledAnswerImages;
+                    questions[i].correctAnswer = shuffledCorrectAnswer;
+                }
+            }
+
+            return questions;
         }
     }
 }
